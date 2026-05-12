@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+
+<html dir="rtl" lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>ملخص اللغة العربية - متطلب جامعة السلطان قابوس</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap');
@@ -91,6 +92,18 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 .quiz-btn{background:var(--g1);color:#fff;border:none;padding:12px 30px;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;margin-top:15px}
 .quiz-btn:hover{opacity:.9;transform:translateY(-1px)}
 .quiz-result{display:none;text-align:center;padding:40px;background:var(--card-bg);border-radius:20px;box-shadow:var(--shadowlg)}
+.quiz-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:16px 0 18px}
+.quiz-filter-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.quiz-filter-btn{border:1px solid var(--border);background:#fff;color:var(--primary);padding:8px 13px;border-radius:999px;font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;transition:all .2s;font-size:13px}
+.quiz-filter-btn:hover,.quiz-filter-btn.active{background:var(--secondary);color:#fff;border-color:var(--secondary);transform:translateY(-1px)}
+.quiz-audit{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin:14px 0}
+.quiz-audit .audit-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px 12px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.quiz-audit .audit-num{font-size:22px;font-weight:900;color:var(--primary);line-height:1.2}
+.quiz-audit .audit-label{font-size:12px;color:var(--muted)}
+.question-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.question-chip{background:#eef2ff;color:#1e3a8a;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+@media(max-width:640px){.quiz-tools{align-items:stretch}.quiz-filter-row{width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}.quiz-filter-btn{white-space:nowrap}.quiz-question{padding:20px 15px}.option{align-items:flex-start}.score-pill{font-size:13px}}
+
 .result-score{font-size:72px;font-weight:900;background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .result-msg{font-size:22px;font-weight:600;color:var(--primary);margin:10px 0}
 .accordion{margin:12px 0}
@@ -130,43 +143,55 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 .back-top{position:fixed;bottom:25px;left:25px;width:45px;height:45px;background:var(--primary);color:#fff;border:none;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:var(--shadow);transition:all .3s;display:none;z-index:999}
 .back-top.visible{display:flex;align-items:center;justify-content:center}
 .back-top:hover{background:var(--secondary);transform:translateY(-3px)}
+
+/* MINI QUIZ INTERACTIVE */
+.mini-q { margin-bottom:16px; }
+.mini-opts { display:flex; flex-direction:column; gap:6px; margin-top:8px; }
+.mini-opt {
+  background:#fff; border:1.5px solid #e0d5c5; border-radius:8px;
+  padding:9px 14px; cursor:pointer; font-size:13.5px;
+  transition:all 0.25s; text-align:right;
+}
+.mini-opt:hover { border-color:var(--secondary); background:#fdf8f0; }
+.mini-opt.correct { border-color:#22c55e!important; background:#f0fdf4!important; color:#15803d!important; font-weight:600; }
+.mini-opt.wrong { border-color:#ef4444!important; background:#fef2f2!important; color:#b91c1c!important; }
+.mini-exp { display:none; font-size:13px; color:#059669; padding:8px 12px; background:#f0fdf4; border-radius:8px; margin-top:6px; border-right:3px solid #22c55e; }
+
 </style>
 </head>
-
 <body>
 <header class="main-header">
-  <div class="header-badge">🎓 جامعة السلطان قابوس</div>
-  <h1>📚 ملخص اللغة العربية الشامل</h1>
-  <p>متطلب الجامعة — مراجعة كاملة للاختبار النهائي</p>
-  <div class="stats-bar">
-    <div class="stat-item"><div class="num">6</div><div class="label">دروس</div></div>
-    <div class="stat-item"><div class="num">129</div><div class="label">سؤال تجريبي</div></div>
-    <div class="stat-item"><div class="num">12</div><div class="label">موضوع نحوي</div></div>
-    <div class="stat-item"><div class="num">8</div><div class="label">موضوع بلاغي</div></div>
-    <div class="stat-item"><div class="num">6</div><div class="label">مواضيع إملاء+ترقيم</div></div>
-  </div>
-  <div style="margin-top:22px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:16px;padding:14px 24px;display:inline-block;backdrop-filter:blur(10px);position:relative;z-index:1;animation:fadeInUp 1s ease 0.5s both">
-    <span style="font-size:18px">🤲</span>
-    <span style="font-size:15px;font-weight:600;margin:0 8px">دعواتكم إن معدلي يرتفع هالفصل</span>
-    <span style="font-size:18px">🤲</span>
-  </div>
+<div class="header-badge">🎓 جامعة السلطان قابوس</div>
+<h1>📚 ملخص اللغة العربية الشامل</h1>
+<p>متطلب الجامعة — مراجعة كاملة للاختبار النهائي</p>
+<div class="stats-bar">
+<div class="stat-item"><div class="num">6</div><div class="label">دروس</div></div>
+<div class="stat-item"><div class="num">129</div><div class="label">سؤال تجريبي</div></div>
+<div class="stat-item"><div class="num">12</div><div class="label">موضوع نحوي</div></div>
+<div class="stat-item"><div class="num">8</div><div class="label">موضوع بلاغي</div></div>
+<div class="stat-item"><div class="num">6</div><div class="label">مواضيع إملاء+ترقيم</div></div>
+</div>
+<div style="margin-top:22px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:16px;padding:14px 24px;display:inline-block;backdrop-filter:blur(10px);position:relative;z-index:1;animation:fadeInUp 1s ease 0.5s both">
+<span style="font-size:18px">🤲</span>
+<span style="font-size:15px;font-weight:600;margin:0 8px">دعواتكم إن معدلي يرتفع هالفصل</span>
+<span style="font-size:18px">🤲</span>
+</div>
 </header>
 <nav class="nav-container">
-  <div class="nav-inner">
-    <button class="nav-btn active" onclick="showSection('home',this)">🏠 الرئيسية</button>
-    <button class="nav-btn" onclick="showSection('durus',this)">📖 الدروس</button>
-    <button class="nav-btn" onclick="showSection('nahw',this)">⚙️ النحو</button>
-    <button class="nav-btn" onclick="showSection('sarf',this)">🔤 الصرف</button>
-    <button class="nav-btn" onclick="showSection('balagha',this)">🌟 البلاغة</button>
-    <button class="nav-btn" onclick="showSection('imla',this)">✍️ الإملاء</button>
-    <button class="nav-btn" onclick="showSection('fahm',this)">📖 فهم النص</button>
-    <button class="nav-btn" onclick="showSection('flashcards',this)">🃏 فلاش كارد</button>
-    <button class="nav-btn" onclick="showSection('quiz',this)">📝 الاختبار النهائي</button>
-  </div>
+<div class="nav-inner">
+<button class="nav-btn active" onclick="showSection('home',this)">🏠 الرئيسية</button>
+<button class="nav-btn" onclick="showSection('durus',this)">📖 الدروس</button>
+<button class="nav-btn" onclick="showSection('nahw',this)">⚙️ النحو</button>
+<button class="nav-btn" onclick="showSection('sarf',this)">🔤 الصرف</button>
+<button class="nav-btn" onclick="showSection('balagha',this)">🌟 البلاغة</button>
+<button class="nav-btn" onclick="showSection('imla',this)">✍️ الإملاء</button>
+<button class="nav-btn" onclick="showSection('fahm',this)">📖 فهم النص</button>
+<button class="nav-btn" onclick="showSection('flashcards',this)">🃏 فلاش كارد</button>
+<button class="nav-btn" onclick="showSection('quiz',this)">📝 الاختبار النهائي</button>
+</div>
 </nav>
 <div class="container">
-
-<div id="home" class="section active">
+<div class="section active" id="home">
 <h2 class="section-title">🏠 نظرة عامة على المادة</h2>
 <div class="mind-map">
 <div class="mind-map-center">📚 مادة اللغة العربية — متطلب جامعة السلطان قابوس</div>
@@ -184,17 +209,15 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <li class="topic-item"><div class="topic-dot dot-green"></div><span><strong>النحو والصرف:</strong> قواعد مرتبة بخرائط ذهنية وجداول وأمثلة تطبيقية</span></li>
 <li class="topic-item"><div class="topic-dot dot-orange"></div><span><strong>البلاغة والإملاء:</strong> قواعد شاملة مع أمثلة من الكتاب والأسئلة السابقة</span></li>
 <li class="topic-item"><div class="topic-dot dot-purple"></div><span><strong>فلاش كارد:</strong> بطاقات مراجعة سريعة — اضغط لكشف الإجابة</span></li>
-<li class="topic-item"><div class="topic-dot dot-red"></div><span><strong>الاختبار النهائي:</strong> 60+ سؤال اختيار من متعدد مع تصحيح فوري وشرح</span></li>
+<li class="topic-item"><div class="topic-dot dot-red"></div><span><strong>الاختبار النهائي:</strong> 129 سؤال اختيار من متعدد مع تصحيح فوري وشرح</span></li>
 </ul></div>
 </div>
-
-<div id="durus" class="section">
+<div class="section" id="durus">
 <h2 class="section-title">📖 الدروس الستة</h2>
-
 <div class="accordion"><div class="accordion-header" onclick="toggleAcc(this)"><span>📗 الدرس الأول والثاني: فلسفة الحياة (شعر رومانسي)</span><span class="accordion-arrow">▼</span></div>
 <div class="accordion-body">
 <div class="tab-nav"><button class="tab-btn active" onclick="switchTab(this,'d1s')">الملخص</button><button class="tab-btn" onclick="switchTab(this,'d1n')">النحو</button><button class="tab-btn" onclick="switchTab(this,'d1b')">البلاغة</button></div>
-<div id="d1s" class="tab-content active">
+<div class="tab-content active" id="d1s">
 <div class="rule-box" style="margin-top:20px"><strong>الموضوع:</strong> التفاؤل والتشاؤم — شاعر رومانسي يلجأ للطبيعة ويدعو للأخذ من الحياة بإيجابية.</div>
 <ul class="topic-list" style="margin-top:15px">
 <li class="topic-item"><div class="topic-dot dot-green"></div>المتفائل: ينظر للحياة بإيجابية، يرى الخير، يرغب الناس في صحبته</li>
@@ -204,7 +227,7 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </ul>
 <div class="note-box">الشاعر يجمع بين الجمل الخبرية والإنشائية. "صفقت للغصون حتى تميلا" — استعارة مكنية: شبّه الطير بإنسان يصفق.</div>
 </div>
-<div id="d1n" class="tab-content">
+<div class="tab-content" id="d1n">
 <h4 style="color:var(--primary);margin:15px 0 10px">📌 المفعول المطلق (المصدر الصريح)</h4>
 <div class="rule-box" style="margin-top:5px">مصدر يُشتق من الفعل لتأكيده أو بيان نوعه أو عدده.</div>
 <div class="table-wrap"><table><thead><tr><th>النوع</th><th>الوظيفة</th><th>المثال</th></tr></thead><tbody>
@@ -214,17 +237,17 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </tbody></table></div>
 <h4 style="color:var(--primary);margin:15px 0 10px">📌 التعدي واللزوم</h4>
 <div class="comparison-box">
-<div class="comp-side green"><strong>المتعدي</strong><br>يجاوز أثره للمفعول<br><em>كتب زيدٌ الدرسَ</em></div>
+<div class="comp-side green"><strong>المتعدي</strong><br/>يجاوز أثره للمفعول<br/><em>كتب زيدٌ الدرسَ</em></div>
 <div class="comp-vs">VS</div>
-<div class="comp-side red"><strong>اللازم</strong><br>لا يتجاوز الفاعل<br><em>جلس زيدٌ</em></div>
+<div class="comp-side red"><strong>اللازم</strong><br/>لا يتجاوز الفاعل<br/><em>جلس زيدٌ</em></div>
 </div>
 <div class="rule-box"><strong>وسائل تعدية اللازم:</strong> همزة التعدية (أجلس) / ألف المفاعلة (جالس) / تضعيف العين (قبَّح)</div>
 </div>
-<div id="d1b" class="tab-content">
+<div class="tab-content" id="d1b">
 <h4 style="color:var(--primary);margin:15px 0 10px">🌟 الأسلوب الخبري والإنشائي</h4>
 <div class="two-col">
-<div class="card" style="border-right:4px solid var(--primary)"><h4 style="color:var(--primary);margin-bottom:10px">الخبري</h4><p style="font-size:14px">يحتمل الصدق أو الكذب.</p><hr style="margin:8px 0;border-color:var(--border)"><p style="font-size:13px"><strong>الأغراض:</strong> الفخر / التحسر / إظهار الضعف / التوبيخ / الاستعطاف</p></div>
-<div class="card" style="border-right:4px solid var(--accent2)"><h4 style="color:var(--accent2);margin-bottom:10px">الإنشائي</h4><p style="font-size:14px">لا يحتمل الصدق أو الكذب.</p><hr style="margin:8px 0;border-color:var(--border)"><p style="font-size:13px"><strong>طلبي:</strong> أمر، نهي، استفهام، تمني، نداء<br><strong>غير طلبي:</strong> تعجب، قسم، مدح، ذم، رجاء</p></div>
+<div class="card" style="border-right:4px solid var(--primary)"><h4 style="color:var(--primary);margin-bottom:10px">الخبري</h4><p style="font-size:14px">يحتمل الصدق أو الكذب.</p><hr style="margin:8px 0;border-color:var(--border)"/><p style="font-size:13px"><strong>الأغراض:</strong> الفخر / التحسر / إظهار الضعف / التوبيخ / الاستعطاف</p></div>
+<div class="card" style="border-right:4px solid var(--accent2)"><h4 style="color:var(--accent2);margin-bottom:10px">الإنشائي</h4><p style="font-size:14px">لا يحتمل الصدق أو الكذب.</p><hr style="margin:8px 0;border-color:var(--border)"/><p style="font-size:13px"><strong>طلبي:</strong> أمر، نهي، استفهام، تمني، نداء<br/><strong>غير طلبي:</strong> تعجب، قسم، مدح، ذم، رجاء</p></div>
 </div>
 <div class="rule-box"><strong>خبري لفظاً إنشائي معنى (دعاء):</strong> جزاك الله خيراً / رحمه الله / صلى الله عليه وسلم</div>
 <h4 style="color:var(--primary);margin:15px 0 8px">أغراض الأمر البلاغية</h4>
@@ -244,16 +267,15 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </div>
 </div>
 </div></div>
-
 <div class="accordion"><div class="accordion-header" onclick="toggleAcc(this)"><span>📗 الدرس الثالث: الغرفة المظلمة (مقالة علمية)</span><span class="accordion-arrow">▼</span></div>
 <div class="accordion-body">
 <div class="tab-nav"><button class="tab-btn active" onclick="switchTab(this,'d3s')">الملخص</button><button class="tab-btn" onclick="switchTab(this,'d3n')">همزة إن</button><button class="tab-btn" onclick="switchTab(this,'d3b')">البلاغة</button></div>
-<div id="d3s" class="tab-content active">
+<div class="tab-content active" id="d3s">
 <div class="rule-box" style="margin-top:20px"><strong>نوع النص:</strong> مقالة علمية — تتناول الغرفة المظلمة كاختراع أسهم في تطور التصوير.</div>
 <div class="note-box"><strong>خصائص الأسلوب العلمي:</strong> استخدام الأرقام والإحصائيات والبيانات، الابتعاد عن الصور الفنية، الدقة والموضوعية والإيجاز والمباشرة.</div>
-<div class="warn-box"><strong>لماذا لا تكثر الصور البيانية في النص العلمي؟</strong><br>لأنه يتحرى الدقة والأسلوب المباشر والبعد عن العاطفة والخيال.</div>
+<div class="warn-box"><strong>لماذا لا تكثر الصور البيانية في النص العلمي؟</strong><br/>لأنه يتحرى الدقة والأسلوب المباشر والبعد عن العاطفة والخيال.</div>
 </div>
-<div id="d3n" class="tab-content">
+<div class="tab-content" id="d3n">
 <h4 style="color:var(--primary);margin:15px 0 10px">📌 همزة إن — الكسر والفتح</h4>
 <div class="two-col">
 <div class="card" style="border-top:3px solid var(--danger)"><h4 style="color:var(--danger);margin-bottom:12px">🔴 مواضع كسر إن</h4>
@@ -274,7 +296,7 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </div>
 <div class="rule-box"><strong>القاعدة الذهبية:</strong> إذا أمكن تأويل (أن + ما بعدها) بمصدر مفرد = فتح. إذا تعذّر التأويل = كسر.</div>
 </div>
-<div id="d3b" class="tab-content">
+<div class="tab-content" id="d3b">
 <h4 style="color:var(--primary);margin:15px 0 10px">🌟 الاستعارة المكنية</h4>
 <div class="rule-box" style="margin-top:5px">تشبيه حُذف منه المشبه به، وبقي شيء من لوازمه يدل عليه.</div>
 <div class="example-box">﴿والصبح إذا تنفّس﴾ — المشبه: الصبح / المشبه به المحذوف: الإنسان / اللازم: التنفس</div>
@@ -287,15 +309,14 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </tbody></table></div>
 </div>
 </div></div>
-
 <div class="accordion"><div class="accordion-header" onclick="toggleAcc(this)"><span>📗 الدرس الرابع: تضحية (قصة)</span><span class="accordion-arrow">▼</span></div>
 <div class="accordion-body">
 <div class="tab-nav"><button class="tab-btn active" onclick="switchTab(this,'d4s')">الملخص</button><button class="tab-btn" onclick="switchTab(this,'d4n')">اسم الفاعل والمفعول</button><button class="tab-btn" onclick="switchTab(this,'d4b')">التشبيه</button></div>
-<div id="d4s" class="tab-content active">
+<div class="tab-content active" id="d4s">
 <div class="rule-box" style="margin-top:20px"><strong>نوع النص:</strong> قصة — موضوعها التضحية. أسلوب وصفي سردي عاطفي.</div>
-<div class="note-box"><strong>نموذج نحوي:</strong> "شفته السفلى تتدلى على هيئة تثير الاشمئزاز"<br>نعتان: الأول مفرد (السفلى) + الثاني جملة فعلية (تثير الاشمئزاز).</div>
+<div class="note-box"><strong>نموذج نحوي:</strong> "شفته السفلى تتدلى على هيئة تثير الاشمئزاز"<br/>نعتان: الأول مفرد (السفلى) + الثاني جملة فعلية (تثير الاشمئزاز).</div>
 </div>
-<div id="d4n" class="tab-content">
+<div class="tab-content" id="d4n">
 <h4 style="color:var(--primary);margin:15px 0 10px">📌 اسم الفاعل — الصياغة الكاملة</h4>
 <div class="table-wrap"><table><thead><tr><th>نوع الفعل</th><th>الطريقة</th><th>أمثلة</th></tr></thead><tbody>
 <tr><td>ثلاثي صحيح</td><td>فاعِل</td><td>كتب←كاتب / شرب←شارب</td></tr>
@@ -310,7 +331,7 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </tbody></table></div>
 <div class="warn-box"><strong>الفرق الجوهري:</strong> اسم الفاعل: مُستخرِج (كسرة) — اسم المفعول: مُستخرَج (فتحة)</div>
 </div>
-<div id="d4b" class="tab-content">
+<div class="tab-content" id="d4b">
 <h4 style="color:var(--primary);margin:15px 0 10px">🌟 التشبيه — أركانه وأنواعه</h4>
 <div class="mind-map" style="margin-top:5px"><div class="mind-map-center">أركان التشبيه الأربعة</div>
 <div class="mind-map-grid">
@@ -327,15 +348,14 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </tbody></table></div>
 </div>
 </div></div>
-
 <div class="accordion"><div class="accordion-header" onclick="toggleAcc(this)"><span>📗 الدرس الخامس: اللغة العربية وعطاؤها (مقالة)</span><span class="accordion-arrow">▼</span></div>
 <div class="accordion-body">
 <div class="tab-nav"><button class="tab-btn active" onclick="switchTab(this,'d5s')">الملخص</button><button class="tab-btn" onclick="switchTab(this,'d5n')">النحو</button><button class="tab-btn" onclick="switchTab(this,'d5b')">القصر والمجاز</button></div>
-<div id="d5s" class="tab-content active">
+<div class="tab-content active" id="d5s">
 <div class="rule-box" style="margin-top:20px"><strong>فكرة النص:</strong> اللغة العربية لغة حضارة وعلم، أسهمت في نقل العلوم ونشر الحضارة الإسلامية للعالم.</div>
 <div class="note-box"><strong>الإسناد المجازي:</strong> (قامت اللغة، تخدم، أفاءت) — أُسندت الأفعال للغة وهي لا تقوم فعلاً = إسناد مجازي.</div>
 </div>
-<div id="d5n" class="tab-content">
+<div class="tab-content" id="d5n">
 <h4 style="color:var(--primary);margin:15px 0 10px">📌 الفاعل — أنواعه وعلامات رفعه</h4>
 <div class="rule-box" style="margin-top:5px">اسم مرفوع، قام بالفعل أو اتصف به، مذكور بعد فعله.</div>
 <div class="table-wrap"><table><thead><tr><th>نوع الفاعل</th><th>مثال</th><th>علامة الرفع</th></tr></thead><tbody>
@@ -345,15 +365,15 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td>ضمير مستتر</td><td>يضرب (تقديره هو)</td><td>—</td></tr>
 <tr><td>مصدر مؤول</td><td>أعجبني أنك كريم</td><td>في محل رفع</td></tr>
 </tbody></table></div>
-<div class="rule-box"><strong>نائب الفاعل:</strong><br>الماضي للمجهول: ضم أوله + كسر ما قبل آخره → شَرح ← شُرِح<br>المضارع للمجهول: ضم أوله + فتح ما قبل آخره → يشرح ← يُشرَح</div>
+<div class="rule-box"><strong>نائب الفاعل:</strong><br/>الماضي للمجهول: ضم أوله + كسر ما قبل آخره → شَرح ← شُرِح<br/>المضارع للمجهول: ضم أوله + فتح ما قبل آخره → يشرح ← يُشرَح</div>
 <h4 style="color:var(--primary);margin:15px 0 10px">📌 الحال والتمييز</h4>
 <div class="comparison-box">
-<div class="comp-side green"><strong>الحال</strong><br>يبيّن هيئة صاحبه وقت الفعل<br><em>جاء خالد <strong>راكباً</strong></em><br>سؤاله: كيف؟</div>
+<div class="comp-side green"><strong>الحال</strong><br/>يبيّن هيئة صاحبه وقت الفعل<br/><em>جاء خالد <strong>راكباً</strong></em><br/>سؤاله: كيف؟</div>
 <div class="comp-vs">VS</div>
-<div class="comp-side red"><strong>التمييز</strong><br>يرفع الإبهام عن اسم أو جملة<br><em>اشتريت عشرين <strong>كتاباً</strong></em><br>سؤاله: ماذا؟</div>
+<div class="comp-side red"><strong>التمييز</strong><br/>يرفع الإبهام عن اسم أو جملة<br/><em>اشتريت عشرين <strong>كتاباً</strong></em><br/>سؤاله: ماذا؟</div>
 </div>
 </div>
-<div id="d5b" class="tab-content">
+<div class="tab-content" id="d5b">
 <h4 style="color:var(--primary);margin:15px 0 10px">🌟 أسلوب القصر</h4>
 <div class="rule-box" style="margin-top:5px"><strong>التعريف:</strong> تخصيص شيء بشيء بطريق مخصوص. أركانه: المقصور + المقصور عليه + أداة القصر.</div>
 <div class="table-wrap"><table><thead><tr><th>الطريقة</th><th>المقصور عليه</th><th>مثال</th></tr></thead><tbody>
@@ -362,18 +382,17 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td><span class="badge badge-yellow">تقديم ما حقه التأخير</span></td><td>المقدَّم</td><td>إياك نعبد (لا غيرك)</td></tr>
 <tr><td><span class="badge badge-purple">العطف (لا/بل/لكن)</span></td><td>قبل لا / بعد بل ولكن</td><td>الأرض كروية لا مسطحة</td></tr>
 </tbody></table></div>
-<div class="note-box"><strong>نوعا القصر:</strong><br>قصر موصوف على صفة: ما محمد إلا رسول<br>قصر صفة على موصوف: لا خالق إلا الله</div>
+<div class="note-box"><strong>نوعا القصر:</strong><br/>قصر موصوف على صفة: ما محمد إلا رسول<br/>قصر صفة على موصوف: لا خالق إلا الله</div>
 </div>
 </div></div>
-
 <div class="accordion"><div class="accordion-header" onclick="toggleAcc(this)"><span>📗 الدرس السادس: ألا هل فتحت من الشوق بابا (شعر)</span><span class="accordion-arrow">▼</span></div>
 <div class="accordion-body">
 <div class="tab-nav"><button class="tab-btn active" onclick="switchTab(this,'d6s')">الملخص</button><button class="tab-btn" onclick="switchTab(this,'d6n')">النواسخ</button></div>
-<div id="d6s" class="tab-content active">
+<div class="tab-content active" id="d6s">
 <div class="rule-box" style="margin-top:20px"><strong>الموضوع:</strong> قصيدة غزلية — يصف الشاعر حبيبته ويرى فيها الشمس. أسلوبه يجمع بين الخبري والإنشائي.</div>
-<div class="example-box"><strong>نموذج من الإعراب:</strong><br>"فما كُلُّ ذي صحبة في البرايا يسرُّ المصاحَب"<br>كُلُّ: اسم ما مرفوع / ذي: مضاف إليه مجرور بالياء (أسماء ستة) / يسرُّ: فعل مضارع مرفوع / المصاحَب: مفعول به منصوب</div>
+<div class="example-box"><strong>نموذج من الإعراب:</strong><br/>"فما كُلُّ ذي صحبة في البرايا يسرُّ المصاحَب"<br/>كُلُّ: اسم ما مرفوع / ذي: مضاف إليه مجرور بالياء (أسماء ستة) / يسرُّ: فعل مضارع مرفوع / المصاحَب: مفعول به منصوب</div>
 </div>
-<div id="d6n" class="tab-content">
+<div class="tab-content" id="d6n">
 <h4 style="color:var(--primary);margin:15px 0 10px">📌 النواسخ — كان وإن وأخواتها</h4>
 <div class="table-wrap"><table><thead><tr><th>الناسخ</th><th>النوع</th><th>العمل</th><th>المعنى</th></tr></thead><tbody>
 <tr><td>كان</td><td>فعل</td><td>يرفع وينصب</td><td>استمرار/انقطاع</td></tr>
@@ -387,7 +406,7 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td>لعل</td><td>حرف</td><td>ينصب ويرفع</td><td>الترجي</td></tr>
 <tr><td>لكن</td><td>حرف</td><td>ينصب ويرفع</td><td>الاستدراك</td></tr>
 </tbody></table></div>
-<div class="warn-box"><strong>الحروف المشبهة بليس:</strong> ما — لا — لات — إن النافية<br>مثال: ما زيدٌ قائماً / لا رجلَ في الدار</div>
+<div class="warn-box"><strong>الحروف المشبهة بليس:</strong> ما — لا — لات — إن النافية<br/>مثال: ما زيدٌ قائماً / لا رجلَ في الدار</div>
 <h4 style="color:var(--primary);margin:15px 0 8px">أغراض النداء</h4>
 <div class="three-col">
 <div class="mind-node"><h4>🌟 التعظيم</h4><ul><li>يا رافعاً راية الشورى</li></ul></div>
@@ -397,21 +416,8 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </div>
 </div></div>
 </div>
-
-<div id="nahw" class="section">
+<div class="section" id="nahw">
 <h2 class="section-title">⚙️ النحو — ملخص شامل</h2>
-<div class="card"><div class="card-header"><div class="card-icon" style="background:#dcfce7">⚡</div><h2>الجملة الفعلية</h2></div>
-<div class="rule-box">تتكون من: فعل + فاعل + مفعول به (إن وُجد)</div>
-<div class="table-wrap"><table><thead><tr><th>الركن</th><th>التعريف</th><th>مثال</th></tr></thead><tbody>
-<tr><td><strong>الفعل</strong></td><td>الحدث</td><td>كتبَ / يكتبُ / اكتُبْ</td></tr>
-<tr><td><strong>الفاعل</strong></td><td>من قام بالفعل — مرفوع دائماً</td><td>الطالبُ (في: كتب الطالبُ)</td></tr>
-<tr><td><strong>المفعول به</strong></td><td>من وقع عليه الفعل — منصوب دائماً</td><td>الدرسَ (في: كتب الطالبُ الدرسَ)</td></tr>
-</tbody></table></div>
-<div class="note-box"><strong>مهم:</strong> الفعل في الجملة الفعلية يُفرد دائماً حتى لو كان الفاعل مثنى أو جمعاً:<br>
-<em>حضرَ الطلابُ ✅ / حضروا الطلابُ ❌</em><br>
-لكن إذا تقدم الفاعل صار مبتدأ: <em>الطلابُ حضروا</em> (جملة اسمية)</div>
-</div>
-
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#dbeafe">🏛️</div><h2>الجملة الاسمية — المبتدأ والخبر</h2></div>
 <div class="mind-map"><div class="mind-map-center">الجملة الاسمية = مبتدأ (مرفوع) + خبر (مرفوع)</div>
 <div class="mind-map-grid">
@@ -420,26 +426,40 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <div class="mind-node"><h4>📌 تقديم الخبر — جوازاً</h4><ul><li>لأغراض بلاغية كالقصر</li><li>مثال: ﴿لله الأمر من قبلُ ومن بعدُ﴾</li></ul></div>
 <div class="mind-node"><h4>📌 شروط المبتدأ</h4><ul><li>الأصل أن يكون معرفة</li><li>يصح نكرة إذا أفاد: في الدار رجلٌ</li><li>يُرفع بالابتداء (عامل معنوي)</li></ul></div>
 </div></div></div>
-
-<div class="card"><div class="card-header"><div class="card-icon" style="background:#e0f2fe">🔵</div><h2>إن وأخواتها — الحروف الناسخة</h2></div>
-<div class="rule-box">تدخل على الجملة الاسمية فتنصب المبتدأ (اسمها) وترفع الخبر (خبرها).</div>
-<div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>الحرف</th><th>المعنى</th><th>مثال</th></tr></thead><tbody>
-<tr><td><span class="badge badge-blue">إن / أن</span></td><td>التوكيد</td><td>إن الله غفور رحيم</td></tr>
-<tr><td><span class="badge badge-green">كأن</span></td><td>التشبيه</td><td>كأن النجوم مصابيح</td></tr>
-<tr><td><span class="badge badge-yellow">لكن</span></td><td>الاستدراك</td><td>الطب صعب لكنه نافع</td></tr>
-<tr><td><span class="badge badge-purple">ليت</span></td><td>التمني (بعيد/مستحيل)</td><td>ليت الشباب يعود</td></tr>
-<tr><td><span class="badge badge-red">لعل</span></td><td>الترجي (محبوب ممكن)</td><td>لعل الله يُحدث بعد ذلك أمراً</td></tr>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="0" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (الله نور السموات) — نوع خبر المبتدأ:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) خبر مفرد</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) جملة فعلية</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) شبه جملة جار ومجرور</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) جملة اسمية</div>
+</div>
+<div class="mini-exp">💡 نور: خبر مفرد مرفوع.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (في البيت رجلٌ) — لماذا قُدِّم الخبر وجوباً؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) لأن المبتدأ معرفة</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) لأن المبتدأ نكرة والخبر شبه جملة</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) لأن الخبر جملة فعلية</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) لأجل القصر</div>
+</div>
+<div class="mini-exp">💡 إذا كان المبتدأ نكرة والخبر شبه جملة وجب تقديم الخبر.</div>
+</div>
+</div>
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#dcfce7">⚡</div><h2>الجملة الفعلية</h2></div>
+<div class="rule-box">تتكون من: فعل + فاعل + مفعول به (إن وُجد)</div>
+<div class="table-wrap"><table><thead><tr><th>الركن</th><th>التعريف</th><th>مثال</th></tr></thead><tbody>
+<tr><td><strong>الفعل</strong></td><td>الحدث</td><td>كتبَ / يكتبُ / اكتُبْ</td></tr>
+<tr><td><strong>الفاعل</strong></td><td>من قام بالفعل — مرفوع دائماً</td><td>الطالبُ (في: كتب الطالبُ)</td></tr>
+<tr><td><strong>المفعول به</strong></td><td>من وقع عليه الفعل — منصوب دائماً</td><td>الدرسَ (في: كتب الطالبُ الدرسَ)</td></tr>
 </tbody></table></div>
-<div class="warn-box"><strong>تنبيه — اسم إن إذا كان مثنى أو جمع مذكر سالم:</strong><br>ينصب بالياء: إن المعلمَين مجتهدان / إن المعلمِين مجتهدون</div></div>
-
-<div class="card"><div class="card-header"><div class="card-icon" style="background:#f3e8ff">🟣</div><h2>ظن وأخواتها — أفعال القلوب</h2></div>
-<div class="rule-box">تنصب مفعولين أصلهما مبتدأ وخبر.</div>
-<div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>الفعل</th><th>مثال</th></tr></thead><tbody>
-<tr><td>ظن / حسب / خال / زعم</td><td>ظننتُ الأمر سهلاً / حسبتُك مخلصاً</td></tr>
-<tr><td>رأى (يقينية) / علم</td><td>رأيتُ العلم نافعاً / علمتُك وفياً</td></tr>
-<tr><td>وجد / جعل (تحويلية) / اتخذ</td><td>وجدتُ الصدق منجاةً / جعلت الورق قارباً</td></tr>
-</tbody></table></div></div>
-
+<div class="note-box"><strong>مهم:</strong> الفعل في الجملة الفعلية يُفرد دائماً حتى لو كان الفاعل مثنى أو جمعاً:<br/>
+<em>حضرَ الطلابُ ✅ / حضروا الطلابُ ❌</em><br/>
+لكن إذا تقدم الفاعل صار مبتدأ: <em>الطلابُ حضروا</em> (جملة اسمية)</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#dbeafe">🔷</div><h2>كان وأخواتها — الأفعال الناسخة</h2></div>
 <div class="rule-box">تدخل على الجملة الاسمية فترفع المبتدأ (اسمها) وتنصب الخبر (خبرها).</div>
 <div class="table-wrap"><table><thead><tr><th>الفعل</th><th>المعنى</th><th>مثال</th></tr></thead><tbody>
@@ -452,15 +472,184 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td><strong>بات</strong></td><td>حدث في الليل</td><td>بات الحارسُ يقظاً</td></tr>
 <tr><td><strong>ظل</strong></td><td>حدث في النهار / الاستمرار</td><td>ظل الطالبُ مجتهداً</td></tr>
 </tbody></table></div>
-<div class="note-box"><strong>أنواع خبر كان:</strong><br>
+<div class="note-box"><strong>أنواع خبر كان:</strong><br/>
 مفرد: كان الجوُّ <strong>جميلاً</strong> / جملة فعلية: كان اللهُ <strong>يعلم</strong> / شبه جملة: كان اللهُ <strong>مع الصابرين</strong>
 </div>
-<div class="warn-box"><strong>الفرق بين كان وإن:</strong><br>
-كان: فعل ناسخ → <strong>ترفع المبتدأ وتنصب الخبر</strong><br>
+<div class="warn-box"><strong>الفرق بين كان وإن:</strong><br/>
+كان: فعل ناسخ → <strong>ترفع المبتدأ وتنصب الخبر</strong><br/>
 إن: حرف ناسخ → <strong>تنصب المبتدأ وترفع الخبر</strong>
 </div>
 </div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. ما الفرق بين كان وإن في العمل النحوي؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) كلاهما يرفع المبتدأ وينصب الخبر</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) كان فعل يرفع وينصب / إن حرف ينصب ويرفع</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) كان حرف ناسخ / إن فعل ناسخ</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) لا فرق</div>
+</div>
+<div class="mini-exp">💡 كان: فعل ناسخ (يرفع المبتدأ وينصب الخبر) / إن: حرف ناسخ (ينصب المبتدأ ويرفع الخبر).</div>
+</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. ما دلالة (ما زال) في: (ما زال العلمُ نافعاً)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) الانقطاع والتحول</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) التوكيد والتأكيد</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) الاستمرار في الحاضر</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) وقت محدد (الليل)</div>
+</div>
+<div class="mini-exp">💡 ما زال تفيد الاستمرار: لا يزال على حاله.</div>
+</div>
+</div>
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#e0f2fe">🔵</div><h2>إن وأخواتها — الحروف الناسخة</h2></div>
+<div class="rule-box">تدخل على الجملة الاسمية فتنصب المبتدأ (اسمها) وترفع الخبر (خبرها).</div>
+<div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>الحرف</th><th>المعنى</th><th>مثال</th></tr></thead><tbody>
+<tr><td><span class="badge badge-blue">إن / أن</span></td><td>التوكيد</td><td>إن الله غفور رحيم</td></tr>
+<tr><td><span class="badge badge-green">كأن</span></td><td>التشبيه</td><td>كأن النجوم مصابيح</td></tr>
+<tr><td><span class="badge badge-yellow">لكن</span></td><td>الاستدراك</td><td>الطب صعب لكنه نافع</td></tr>
+<tr><td><span class="badge badge-purple">ليت</span></td><td>التمني (بعيد/مستحيل)</td><td>ليت الشباب يعود</td></tr>
+<tr><td><span class="badge badge-red">لعل</span></td><td>الترجي (محبوب ممكن)</td><td>لعل الله يُحدث بعد ذلك أمراً</td></tr>
+</tbody></table></div>
+<div class="warn-box"><strong>تنبيه — اسم إن إذا كان مثنى أو جمع مذكر سالم:</strong><br/>ينصب بالياء: إن المعلمَين مجتهدان / إن المعلمِين مجتهدون</div></div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. ما الفرق بين ليت ولعل؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) ليت للتوكيد ولعل للتشبيه</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) ليت للتمني (بعيد/مستحيل) ولعل للترجي (ممكن محبوب)</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) ليت للنفي ولعل للإثبات</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) لا فرق بينهما</div>
+</div>
+<div class="mini-exp">💡 ليت: تمنٍّ لأمر بعيد أو مستحيل / لعل: ترجٍّ لأمر محبوب ممكن.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (إن المعلمِين مجتهدون) — لماذا الياء في (المعلمين)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) لأنه خبر إن مرفوع</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) لأنه اسم إن وهو جمع مذكر سالم يُنصب بالياء</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) لأنه مجرور بالإضافة</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) لأنه مفعول به</div>
+</div>
+<div class="mini-exp">💡 اسم إن منصوب، وجمع المذكر السالم يُنصب بالياء.</div>
+</div>
+</div>
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#e0f2fe">🌀</div><h2>كاد وأخواتها — أفعال المقاربة والرجاء والشروع</h2></div>
+<div class="rule-box">أفعال ناقصة ناسخة تعمل عمل كان: ترفع المبتدأ (اسمها) وتنصب الخبر (خبرها). <strong>يشترط أن يكون خبرها جملة فعلية.</strong></div>
+<div class="table-wrap"><table><thead><tr><th>النوع</th><th>الأفعال</th><th>المعنى</th><th>مثال</th></tr></thead><tbody>
+<tr><td><span class="badge badge-blue">المقاربة</span></td><td>كاد، كرب، أوشك</td><td>قرب وقوع الخبر</td><td>كاد المعلمُ أن يكون رسولاً / أوشكت السحبُ أن تمطر</td></tr>
+<tr><td><span class="badge badge-green">الرجاء</span></td><td>عسى، حرى، اخلولق</td><td>تمني وقوع الخبر</td><td>عسى الكربُ أن يزول / حرى الغائبُ أن يحضر</td></tr>
+<tr><td><span class="badge badge-yellow">الشروع</span></td><td>جعل، أخذ، شرع، طفق، أنشأ، بدأ</td><td>البدء في الفعل</td><td>طفق الطالبُ يذاكر / شرع القومُ يبنون</td></tr>
+</tbody></table></div>
+<div class="warn-box"><strong>مهم جداً — عسى لها حالتان:</strong><br/>
+<strong>ناقصة:</strong> عسى + اسم + أن وفعل مضارع → عسى الغائبُ أن يعود (اسمها: الغائب)<br/>
+<strong>تامة:</strong> عسى + أن وفعل مباشرة → عسى أن ينجح الطالب (المصدر المؤول فاعل)<br/><br/>
+<strong>تنبيه:</strong> إذا لم يكن الخبر جملة فعلية لا تعمل عمل الناقصة: (أخذ الطالبُ القلمَ) هنا أخذ = فعل تام + فاعل + مفعول به.
+</div>
+</div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. ما الفرق بين كاد وعسى وطفق؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) كلها بمعنى واحد</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) كاد: مقاربة / عسى: رجاء / طفق: شروع</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) كاد: شروع / عسى: مقاربة / طفق: رجاء</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) كاد: رجاء / عسى: شروع / طفق: مقاربة</div>
+</div>
+<div class="mini-exp">💡 كاد وأوشك: مقاربة / عسى وحرى: رجاء / طفق وشرع وأخذ: شروع.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (عسى أن ينجح الطالبُ) — عسى هنا:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) ناقصة — اسمها الطالب</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) تامة — المصدر المؤول فاعلها</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) مثل كاد تماماً</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) حرف ناسخ</div>
+</div>
+<div class="mini-exp">💡 عسى تامة هنا: جاءت بعدها (أن + فعل) مباشرة بدون اسم مذكور → المصدر المؤول فاعلها.</div>
+</div>
+</div>
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#f3e8ff">🟣</div><h2>ظن وأخواتها — أفعال القلوب</h2></div>
+<div class="rule-box">تنصب مفعولين أصلهما مبتدأ وخبر.</div>
+<div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>الفعل</th><th>مثال</th></tr></thead><tbody>
+<tr><td>ظن / حسب / خال / زعم</td><td>ظننتُ الأمر سهلاً / حسبتُك مخلصاً</td></tr>
+<tr><td>رأى (يقينية) / علم</td><td>رأيتُ العلم نافعاً / علمتُك وفياً</td></tr>
+<tr><td>وجد / جعل (تحويلية) / اتخذ</td><td>وجدتُ الصدق منجاةً / جعلت الورق قارباً</td></tr>
+</tbody></table></div></div>
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#d1fae5">👤</div><h2>الفاعل ونائب الفاعل</h2></div>
+<div class="rule-box">الفاعل: اسم مرفوع قام بالفعل أو اتصف به، يأتي بعد فعله مباشرةً.</div>
+<div class="table-wrap"><table><thead><tr><th>نوع الفاعل</th><th>مثال</th><th>علامة الرفع</th></tr></thead><tbody>
+<tr><td>اسم ظاهر</td><td>حضرَ <strong>محمدٌ</strong></td><td>الضمة</td></tr>
+<tr><td>واو الجماعة</td><td>كتبُوا</td><td>الواو</td></tr>
+<tr><td>ألف الاثنين</td><td>كتبَا</td><td>الألف</td></tr>
+<tr><td>ضمير مستتر</td><td>يضربُ (تقديره هو)</td><td>مستتر</td></tr>
+<tr><td>مصدر مؤول</td><td>أعجبني <strong>أنك كريم</strong></td><td>في محل رفع</td></tr>
+</tbody></table></div>
+<div class="warn-box"><strong>الفعل يُفرد مع الفاعل دائماً حتى لو الفاعل مثنى أو جمع:</strong><br/>
+حضرَ الطلابُ ✅ — لا تقل: حضروا الطلابُ ❌<br/>
+لكن: الطلابُ حضروا ✅ (جملة اسمية لأن الفاعل تقدم وصار مبتدأ)</div>
+</div>
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#fef3c7">🔁</div><h2>المفعول المطلق</h2></div>
+<div class="rule-box">مصدر منصوب يُشتق من لفظ فعله، يُذكر لتأكيد الفعل أو بيان نوعه أو عدده.</div>
+<div class="table-wrap"><table><thead><tr><th>النوع</th><th>الغرض</th><th>المثال</th></tr></thead><tbody>
+<tr><td><span class="badge badge-blue">مؤكد</span></td><td>تأكيد الحدث — غير موصوف ولا مضاف</td><td>فجّرونها <strong>تفجيراً</strong></td></tr>
+<tr><td><span class="badge badge-green">مبيّن للنوع</span></td><td>موصوف أو مضاف</td><td>اذكروا الله <strong>ذكراً كثيراً</strong></td></tr>
+<tr><td><span class="badge badge-yellow">مبيّن للعدد</span></td><td>يبيّن كمية الحدث</td><td>ضربتُه <strong>ضربتين</strong></td></tr>
+</tbody></table></div>
+<div class="note-box"><strong>النائب عن المفعول المطلق:</strong> صفة المصدر / اسم المصدر / العدد / المصدر المرادف.<br/>
+مثال: سرتُ <strong>طويلاً</strong> (صفة نابت عن مفعول مطلق)</div>
+</div>
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#f3e8ff">🎭</div><h2>الحال والتمييز</h2></div>
+<div class="two-col">
+<div>
+<h4 style="color:var(--primary);margin-bottom:8px">الحال</h4>
+<div class="rule-box" style="margin-top:0">اسم نكرة منصوب يبيّن هيئة صاحبه وقت وقوع الفعل. سؤاله: <strong>كيف؟</strong></div>
+<div class="example-box">جاء خالدٌ <strong>راكباً</strong><br/>رأيتُ الطالبَ <strong>يذاكرُ</strong> — جملة في محل نصب حال</div>
+<div class="note-box" style="margin-top:8px"><strong>قاعدة:</strong> الجملة بعد <strong>معرفة</strong> = حال / بعد <strong>نكرة</strong> = نعت</div>
+</div>
+<div>
+<h4 style="color:var(--primary);margin-bottom:8px">التمييز</h4>
+<div class="rule-box" style="margin-top:0">اسم نكرة منصوب يرفع الإبهام عن اسم أو جملة. سؤاله: <strong>ماذا؟ من أي نوع؟</strong></div>
+<div class="example-box">اشتريت عشرين <strong>كتاباً</strong><br/>طاب محمدٌ <strong>خُلقاً</strong> — تمييز نسبة</div>
+<div class="note-box" style="margin-top:8px">تمييز ذات: يفسّر عدداً أو مقداراً مبهماً.<br/>تمييز نسبة: يفسّر نسبة في الجملة.</div>
+</div>
+</div>
+</div>
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#e0f2fe">🔗</div><h2>المفعول به — المتعدي لمفعولين وثلاثة</h2></div>
+<div class="table-wrap"><table><thead><tr><th>النوع</th><th>الأفعال</th><th>مثال</th></tr></thead><tbody>
+<tr><td>متعدٍّ لمفعول واحد</td><td>كتب، قرأ، أكل</td><td>كتب زيدٌ <strong>الدرسَ</strong></td></tr>
+<tr><td>متعدٍّ لمفعولين (أصلهما م+خ)</td><td>ظن، حسب، رأى، علم</td><td>ظننتُ <strong>الأمرَ سهلاً</strong></td></tr>
+<tr><td>متعدٍّ لمفعولين (ليس أصلهما م+خ)</td><td>أعطى، منح، سأل، علّم</td><td>أعطيتُ <strong>الطالبَ كتاباً</strong></td></tr>
+<tr><td>متعدٍّ لثلاثة مفاعيل</td><td>أعلم، أرى، نبّأ، حدّث</td><td>أعلمتُ <strong>زيداً الأمرَ واضحاً</strong></td></tr>
+</tbody></table></div>
+<div class="warn-box"><strong>الفرق:</strong> أعطى تنصب مفعولين لكن ليس أصلهما مبتدأ وخبر. أما ظن فمفعولاها أصلهما مبتدأ وخبر: (الأمر سهل).</div>
+</div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. ما الفرق بين أعطى وظن في التعدي؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) كلاهما يتعدى لمفعولين أصلهما مبتدأ وخبر</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) أعطى مفعولاها ليسا مبتدأً وخبراً / ظن مفعولاها أصلهما مبتدأ وخبر</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) لا فرق</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) أعطى لمفعول واحد وظن لمفعولين</div>
+</div>
+<div class="mini-exp">💡 ظن: (العلم نافع) ← مبتدأ وخبر / أعطى: (زيداً كتاباً) ← ليسا مبتدأً وخبراً.</div>
+</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. كم مفعولاً في: (أعلمتُ خالداً الأمرَ واضحاً)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) مفعول واحد</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) مفعولان</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) ثلاثة مفاعيل</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) لا مفعول</div>
+</div>
+<div class="mini-exp">💡 أعلم تتعدى لثلاثة: خالداً + الأمرَ + واضحاً.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fee2e2">🔴</div><h2>لا النافية للجنس — لا الناهية — الفرق بينهما</h2></div>
 <div class="two-col">
 <div>
@@ -472,17 +661,39 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <div>
 <h4 style="color:var(--danger);margin-bottom:8px">⛔ لا الناهية</h4>
 <div class="rule-box" style="margin-top:0">تجزم الفعل المضارع وتفيد النهي عن فعل شيء.</div>
-<div class="example-box">لا تهملوا واجبكم (مجزوم بحذف النون)<br>لا تكذبْ (مجزوم بالسكون)</div>
+<div class="example-box">لا تهملوا واجبكم (مجزوم بحذف النون)<br/>لا تكذبْ (مجزوم بالسكون)</div>
 <div class="note-box" style="margin-top:8px"><strong>أغراضها البلاغية:</strong> الدعاء / النصح / التيئيس / التمني / التحذير</div>
 </div>
 </div>
-<div class="warn-box"><strong>الفرق السريع:</strong><br>
-لا + <strong>اسم نكرة</strong> منصوب = النافية للجنس: <em>لا رجلَ في الدار</em><br>
-لا + <strong>فعل مضارع مجزوم</strong> = الناهية: <em>لا تهملْ</em><br>
+<div class="warn-box"><strong>الفرق السريع:</strong><br/>
+لا + <strong>اسم نكرة</strong> منصوب = النافية للجنس: <em>لا رجلَ في الدار</em><br/>
+لا + <strong>فعل مضارع مجزوم</strong> = الناهية: <em>لا تهملْ</em><br/>
 لا + <strong>فعل مضارع مرفوع</strong> = النافية العادية: <em>لا يهملُ المجتهد</em>
 </div>
 </div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. ﴿لا فيها غَوْلٌ﴾ — ما نوع (لا) وما إعراب (غول)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) ناهية / مجزوم</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) نافية للجنس / اسمها منصوب مرفوع بالضمة</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) نافية عادية / مرفوع</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) زائدة / لا محل له</div>
+</div>
+<div class="mini-exp">💡 لا نافية للجنس / غَوْلٌ اسمها لكنه جاء مرفوعاً لأنه مفصول عنها بشبه جملة (فيها) — وهذا من شروط إلغاء عملها.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. فرّق: (لا تكذبْ) vs (لا يكذبُ المؤمن) vs (لا كذبَ في الإسلام):</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) كلها نافية</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) الأولى ناهية (مجزوم) / الثانية نافية (مرفوع) / الثالثة نافية للجنس</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) الأولى نافية / الثانية ناهية / الثالثة نافية</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) كلها ناهية</div>
+</div>
+<div class="mini-exp">💡 لا + فعل مجزوم = ناهية / لا + فعل مرفوع = نافية / لا + اسم نكرة منصوب = نافية للجنس.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#f0fdf4">🔄</div><h2>بناء الفعل للمجهول — قواعد كاملة</h2></div>
 <div class="rule-box">يُبنى الفعل للمجهول عند حذف الفاعل، فيحل نائب الفاعل محله ويأخذ حكمه (الرفع).</div>
 <div class="two-col">
@@ -503,39 +714,42 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </tbody></table></div>
 </div>
 </div>
-<div class="note-box"><strong>الفعل الأجوف للمجهول:</strong><br>
-قال (ماضٍ) ← قِيلَ (تنقلب الألف ياءً) / باع ← بِيعَ<br>
+<div class="note-box"><strong>الفعل الأجوف للمجهول:</strong><br/>
+قال (ماضٍ) ← قِيلَ (تنقلب الألف ياءً) / باع ← بِيعَ<br/>
 يقول (مضارع) ← يُقالُ / يبيع ← يُباعُ
 </div>
-<div class="example-box"><strong>إعراب نائب الفاعل:</strong><br>
-كُتِبَ <strong>الدرسُ</strong> ← الدرسُ: نائب فاعل مرفوع وعلامة رفعه الضمة<br>
+<div class="example-box"><strong>إعراب نائب الفاعل:</strong><br/>
+كُتِبَ <strong>الدرسُ</strong> ← الدرسُ: نائب فاعل مرفوع وعلامة رفعه الضمة<br/>
 كُتِبَتْ <strong>الرسالةُ</strong> ← الرسالةُ: نائب فاعل مرفوع
 </div>
 </div>
-
-<div class="card"><div class="card-header"><div class="card-icon" style="background:#e0f2fe">🌀</div><h2>كاد وأخواتها — أفعال المقاربة والرجاء والشروع</h2></div>
-<div class="rule-box">أفعال ناقصة ناسخة تعمل عمل كان: ترفع المبتدأ (اسمها) وتنصب الخبر (خبرها). <strong>يشترط أن يكون خبرها جملة فعلية.</strong></div>
-<div class="table-wrap"><table><thead><tr><th>النوع</th><th>الأفعال</th><th>المعنى</th><th>مثال</th></tr></thead><tbody>
-<tr><td><span class="badge badge-blue">المقاربة</span></td><td>كاد، كرب، أوشك</td><td>قرب وقوع الخبر</td><td>كاد المعلمُ أن يكون رسولاً / أوشكت السحبُ أن تمطر</td></tr>
-<tr><td><span class="badge badge-green">الرجاء</span></td><td>عسى، حرى، اخلولق</td><td>تمني وقوع الخبر</td><td>عسى الكربُ أن يزول / حرى الغائبُ أن يحضر</td></tr>
-<tr><td><span class="badge badge-yellow">الشروع</span></td><td>جعل، أخذ، شرع، طفق، أنشأ، بدأ</td><td>البدء في الفعل</td><td>طفق الطالبُ يذاكر / شرع القومُ يبنون</td></tr>
-</tbody></table></div>
-<div class="warn-box"><strong>مهم جداً — عسى لها حالتان:</strong><br>
-<strong>ناقصة:</strong> عسى + اسم + أن وفعل مضارع → عسى الغائبُ أن يعود (اسمها: الغائب)<br>
-<strong>تامة:</strong> عسى + أن وفعل مباشرة → عسى أن ينجح الطالب (المصدر المؤول فاعل)<br><br>
-<strong>تنبيه:</strong> إذا لم يكن الخبر جملة فعلية لا تعمل عمل الناقصة: (أخذ الطالبُ القلمَ) هنا أخذ = فعل تام + فاعل + مفعول به.
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. حوّل للمجهول: (كتبَ الطالبُ الدرسَ):</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) كُتِبَ الطالبُ الدرسَ</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) كُتِبَ الدرسُ</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) كِتِبَ الدرسُ</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) يُكتَب الدرسُ</div>
+</div>
+<div class="mini-exp">💡 كُتِبَ: ضم الكاف وكسر التاء. الدرسُ: نائب فاعل مرفوع.</div>
+</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (يشرح المعلمُ الدرسَ) → للمجهول:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) يِشرَح الدرسُ</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) يَشرُح الدرسُ</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) يُشرَح الدرسُ</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) شُرِح الدرسُ</div>
+</div>
+<div class="mini-exp">💡 يُشرَح: ضم أول المضارع + فتح ما قبل الآخر.</div>
 </div>
 </div>
-
-<div class="card"><div class="card-header"><div class="card-icon" style="background:#fee2e2">🔴</div><h2>لا النافية للجنس</h2></div>
-<div class="rule-box">تنصب الاسم النكرة وترفع الخبر. تنفي الجنس كله نفياً قاطعاً.</div>
-<div class="example-box"><strong>مثال:</strong> ﴿لا ريبَ فيه﴾ / "لا خيلَ عندك تهديها ولا مال"</div>
-<div class="warn-box"><strong>شروط عملها:</strong> أن يكون اسمها وخبرها نكرتين — وألا يدخل بينها وبين اسمها فاصل.</div></div>
-
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fef3c7">🟠</div><h2>التوكيد والبدل</h2></div>
 <div class="two-col">
 <div><h4 style="color:var(--primary);margin-bottom:10px">التوكيد</h4>
-<div class="rule-box" style="margin-top:0">تابع يُقرّر المتبوع ويزيل الشك عنه.<br><strong>الألفاظ:</strong> نفس، عين، كل، جميع، كلا، كلتا</div>
+<div class="rule-box" style="margin-top:0">تابع يُقرّر المتبوع ويزيل الشك عنه.<br/><strong>الألفاظ:</strong> نفس، عين، كل، جميع، كلا، كلتا</div>
 <div class="example-box">آدم أبو البشر <strong>كلُّه</strong> / جاء الطلاب <strong>أنفسُهم</strong></div></div>
 <div><h4 style="color:var(--primary);margin-bottom:10px">البدل</h4>
 <div class="rule-box" style="margin-top:0">تابع مقصود بالحكم بلا واسطة.</div>
@@ -545,7 +759,106 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td>بدل اشتمال</td><td>أعجبني عليٌّ <strong>علمُه</strong></td></tr>
 </tbody></table></div></div>
 </div></div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. ما نوع التابع في: (جاء الطلابُ أنفسُهم)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) بدل مطابق</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) توكيد معنوي</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) نعت</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) حال</div>
+</div>
+<div class="mini-exp">💡 أنفسهم: توكيد معنوي بلفظ (أنفس).</div>
+</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. ما نوع البدل في: (أعجبني خالدٌ علمُه)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) بدل مطابق</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) بدل بعض من كل</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) بدل اشتمال</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) توكيد</div>
+</div>
+<div class="mini-exp">💡 بدل اشتمال: العلم شيء يشتمل عليه خالد.</div>
+</div>
+</div>
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#dcfce7">📝</div><h2>النعت (الصفة)</h2></div>
+<div class="rule-box">تابع يُكمّل منعوته ويوضحه، يتبعه في: الإعراب، التذكير/التأنيث، التعريف/التنكير، الإفراد/التثنية/الجمع.</div>
+<div class="two-col">
+<div><h4 style="color:var(--primary);margin-bottom:8px">النعت الحقيقي</h4>
+<p style="font-size:14px">يصف المنعوت نفسه مباشرةً.</p>
+<div class="example-box">جاء طالبٌ <strong>مجتهدٌ</strong><br/>قرأت كتاباً <strong>مفيداً</strong></div></div>
+<div><h4 style="color:var(--primary);margin-bottom:8px">النعت السببي</h4>
+<p style="font-size:14px">يصف اسماً مرتبطاً بالمنعوت.</p>
+<div class="example-box">جاء طالبٌ <strong>مجتهدٌ أبوهُ</strong><br/>(يصف الأب لا الطالب)</div></div>
+</div>
+<div class="note-box"><strong>النعت الجملة:</strong> المنعوت نكرة + الجملة تحتوي رابطاً.<br/>مثال: جاء رجلٌ <strong>يحمل كتاباً</strong> — جملة في محل رفع نعت.</div>
+<div class="note-box"><strong>من الأسئلة:</strong> "شفته السفلى تتدلى على هيئة تثير الاشمئزاز"<br/>نعتان: الأول (السفلى) مفرد — الثاني (تثير الاشمئزاز) جملة فعلية.</div>
+<h4 style="color:var(--primary);margin:15px 0 8px">📌 النعت شبه الجملة</h4>
+<div class="example-box">
+رأيت رجلاً <strong>في السوق</strong> ← شبه جملة (جار ومجرور) في محل نصب نعت<br/>
+جاء طفلٌ <strong>عند الباب</strong> ← شبه جملة (ظرف) في محل رفع نعت
+</div>
+<h4 style="color:var(--primary);margin:15px 0 8px">📌 الموقع الإعرابي للجمل</h4>
+<div class="table-wrap"><table><thead><tr><th>الجملة</th><th>موقعها الإعرابي</th><th>الشرط</th></tr></thead><tbody>
+<tr><td>جملة بعد المبتدأ</td><td>في محل رفع <strong>خبر</strong></td><td>لها رابط يعود على المبتدأ</td></tr>
+<tr><td>جملة بعد نكرة</td><td>في محل رفع/نصب/جر <strong>نعت</strong></td><td>المنعوت نكرة دائماً</td></tr>
+<tr><td>جملة بعد معرفة</td><td>في محل نصب/رفع <strong>حال</strong></td><td>صاحب الحال معرفة</td></tr>
+<tr><td>جملة بعد مضاف إليه</td><td>في محل جر <strong>مضاف إليه</strong></td><td>المضاف يدل على زمن</td></tr>
+</tbody></table></div>
+<div class="example-box">
+الطالبُ <strong>يقرأ</strong> ← جملة في محل رفع <strong>خبر</strong> (المبتدأ معرفة)<br/>
+جاء رجلٌ <strong>يحمل حقيبة</strong> ← جملة في محل رفع <strong>نعت</strong> (رجل نكرة)<br/>
+رأيتُ الطالبَ <strong>يذاكر</strong> ← جملة في محل نصب <strong>حال</strong> (الطالب معرفة)
+</div>
+<h4 style="color:var(--primary);margin:15px 0 8px">📌 اسم الإشارة — نعت أم بدل؟</h4>
+<div class="comparison-box">
+<div class="comp-side green">
+<strong>معرفة + اسم إشارة = نعت</strong><br/>
+الطالبُ <strong>هذا</strong> كسولٌ<br/>
+(هذا: نعت للطالب)
+</div>
+<div class="comp-vs">أو</div>
+<div class="comp-side red">
+<strong>اسم إشارة + معرفة = بدل</strong><br/>
+<strong>هذا</strong> الطالبُ كسولٌ<br/>
+(الطالب: بدل من هذا)
+</div>
+</div>
+</div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (رأيتُ الطالبَ يذاكرُ) — جملة (يذاكر) إعرابها:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) في محل رفع نعت</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) في محل نصب حال</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) في محل نصب نعت</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) لا محل لها</div>
+</div>
+<div class="mini-exp">💡 الطالب معرفة → الجملة بعده حال.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (جاء رجلٌ يحملُ كتاباً) — جملة (يحمل) إعرابها:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) في محل نصب حال</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) في محل رفع نعت</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) في محل جر نعت</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) لا محل لها</div>
+</div>
+<div class="mini-exp">💡 رجل نكرة → الجملة بعده نعت في محل رفع.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">3. (هذا الطالبُ) vs (الطالبُ هذا) — الفرق:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) لا فرق</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) هذا الطالب: الطالب بدل / الطالب هذا: هذا نعت</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) هذا الطالب: هذا نعت / الطالب هذا: الطالب بدل</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) كلاهما نعت</div>
+</div>
+<div class="mini-exp">💡 اسم إشارة + معرفة = بدل / معرفة + اسم إشارة = نعت.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#dcfce7">🟢</div><h2>إعراب الفعل المضارع</h2></div>
 <div class="mind-map"><div class="mind-map-center">الفعل المضارع — أحواله الإعرابية الأربع</div>
 <div class="mind-map-grid">
@@ -554,8 +867,30 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <div class="mind-node"><h4>⬇️ الجزم</h4><ul><li>أدواته: لم، لما، لام الأمر، لا الناهية</li><li>أدوات الشرط: إن، إذما، من، ما، مهما...</li><li>علامته: السكون / حذف النون (الخمسة) / حذف حرف العلة</li></ul></div>
 <div class="mind-node"><h4>🔒 البناء</h4><ul><li>على الفتح: إذا اتصلت به نون التوكيد</li><li>على السكون: إذا اتصلت به نون النسوة</li></ul></div>
 </div></div>
-<div class="warn-box"><strong>الفرق بين لا الناهية ولا النافية:</strong><br>الناهية: يُجزم الفعل بعدها (لا تهملوا) — أسلوب إنشائي<br>النافية: لا يُجزم الفعل بعدها (لا تهملون) — أسلوب خبري</div></div>
-
+<div class="warn-box"><strong>الفرق بين لا الناهية ولا النافية:</strong><br/>الناهية: يُجزم الفعل بعدها (لا تهملوا) — أسلوب إنشائي<br/>النافية: لا يُجزم الفعل بعدها (لا تهملون) — أسلوب خبري</div></div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (لن يكتبوا الواجب) — علامة نصب الفعل:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) الفتحة</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) حذف النون لأنه من الأفعال الخمسة</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) السكون</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) حذف حرف العلة</div>
+</div>
+<div class="mini-exp">💡 الأفعال الخمسة تُنصب وتُجزم بحذف النون.</div>
+</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (لم يخشَ الحقَّ) — علامة جزم الفعل:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) السكون</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) حذف النون</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) حذف حرف العلة (الألف)</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) الفتحة</div>
+</div>
+<div class="mini-exp">💡 الفعل المعتل الآخر يُجزم بحذف حرف العلة.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#d1fae5">📖</div><h2>بناء الأفعال — الماضي والأمر</h2></div>
 <div class="two-col">
 <div>
@@ -578,12 +913,52 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </tbody></table></div>
 </div>
 </div>
-<div class="note-box"><strong>تاء التأنيث الساكنة vs تاء الفاعل:</strong><br>
-<strong>تاء التأنيث:</strong> حرف ساكن مبني لا محل له من الإعراب، تلحق الفعل الماضي للدلالة على تأنيث الفاعل → جاءَتْ فاطمةُ<br>
+<div class="note-box"><strong>تاء التأنيث الساكنة vs تاء الفاعل:</strong><br/>
+<strong>تاء التأنيث:</strong> حرف ساكن مبني لا محل له من الإعراب، تلحق الفعل الماضي للدلالة على تأنيث الفاعل → جاءَتْ فاطمةُ<br/>
 <strong>تاء الفاعل:</strong> ضمير متصل في محل رفع فاعل → كتبْتُ (أنا) / كتبْتَ (أنت) / كتبْتِ (أنتِ)
 </div>
 </div>
-
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#f3e8ff">📐</div><h2>الأفعال الخمسة — إعرابها</h2></div>
+<div class="rule-box">كل فعل مضارع اتصل به: ألف الاثنين، واو الجماعة، أو ياء المخاطبة.</div>
+<div class="table-wrap"><table><thead><tr><th>الحالة</th><th>العلامة</th><th>مثال</th></tr></thead><tbody>
+<tr><td>الرفع</td><td>ثبوت النون</td><td>يكتبونَ / يكتبانِ / تكتبينَ</td></tr>
+<tr><td>النصب</td><td>حذف النون</td><td>لن يكتبوا / لن يكتبا / لن تكتبي</td></tr>
+<tr><td>الجزم</td><td>حذف النون</td><td>لم يكتبوا / لم يكتبا / لم تكتبي</td></tr>
+</tbody></table></div>
+<div class="example-box"><strong>إعراب:</strong> (لن يكتبوا الواجب)<br/>يكتبوا: فعل مضارع منصوب بلن، وعلامة نصبه حذف النون لأنه من الأفعال الخمسة، وواو الجماعة في محل رفع فاعل.</div>
+</div>
+<div class="card"><div class="card-header"><div class="card-icon" style="background:#fce7f3">🔤</div><h2>الأسماء الخمسة — إعرابها</h2></div>
+<div class="rule-box">هي: أب، أم، أخ، حم، فو، ذو — تُعرب بالحروف بدل الحركات بشرط: الإضافة لغير ياء المتكلم.</div>
+<div class="table-wrap"><table><thead><tr><th>الحالة</th><th>العلامة</th><th>مثال</th></tr></thead><tbody>
+<tr><td>الرفع</td><td>الواو</td><td>جاء أبوكَ</td></tr>
+<tr><td>النصب</td><td>الألف</td><td>رأيت أباكَ</td></tr>
+<tr><td>الجر</td><td>الياء</td><td>مررت بأبيكَ</td></tr>
+</tbody></table></div>
+<div class="warn-box"><strong>إذا أُضيفت لياء المتكلم:</strong> تُعرب بحركات مقدرة: أبي، أخي، حمي.</div>
+</div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (جاء أبوك) — علامة رفع (أبو):</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) الضمة</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) الواو لأنه من الأسماء الخمسة</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) الألف</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) ثبوت النون</div>
+</div>
+<div class="mini-exp">💡 الأسماء الخمسة ترفع بالواو.</div>
+</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (رأيت ذا علمٍ) — علامة نصب (ذا):</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) الفتحة</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) الياء</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) الألف لأنه من الأسماء الخمسة</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) حذف النون</div>
+</div>
+<div class="mini-exp">💡 الأسماء الخمسة تنصب بالألف.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fef3c7">🔡</div><h2>الأسماء المعتلة — المقصور والمنقوص والممدود</h2></div>
 <div class="table-wrap"><table><thead><tr><th>النوع</th><th>التعريف</th><th>إعرابه</th><th>أمثلة</th></tr></thead><tbody>
 <tr><td><span class="badge badge-blue">المقصور</span></td><td>ينتهي بألف لازمة مقصورة</td><td>يُعرب بحركات مقدرة للتعذر على الألف</td><td>الفتى، العصا، موسى، مستشفى</td></tr>
@@ -594,98 +969,22 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <div>
 <h4 style="color:var(--primary);margin-bottom:8px">المنقوص مع (ال)</h4>
 <div class="example-box">
-جاء <strong>القاضي</strong>: فاعل مرفوع وعلامة رفعه الضمة <strong>المقدرة للثقل</strong><br>
-رأيت <strong>القاضيَ</strong>: مفعول به منصوب وعلامة نصبه الفتحة <strong>الظاهرة</strong><br>
+جاء <strong>القاضي</strong>: فاعل مرفوع وعلامة رفعه الضمة <strong>المقدرة للثقل</strong><br/>
+رأيت <strong>القاضيَ</strong>: مفعول به منصوب وعلامة نصبه الفتحة <strong>الظاهرة</strong><br/>
 مررت بـ<strong>القاضي</strong>: مجرور وعلامة جره الكسرة <strong>المقدرة للثقل</strong>
 </div>
 </div>
 <div>
 <h4 style="color:var(--primary);margin-bottom:8px">المنقوص بدون (ال)</h4>
 <div class="example-box">
-جاء <strong>قاضٍ</strong>: فاعل مرفوع بضمة مقدرة على الياء <strong>المحذوفة</strong> (التنوين عوض عنها)<br>
-رأيت <strong>قاضياً</strong>: مفعول به منصوب بالفتحة الظاهرة<br>
+جاء <strong>قاضٍ</strong>: فاعل مرفوع بضمة مقدرة على الياء <strong>المحذوفة</strong> (التنوين عوض عنها)<br/>
+رأيت <strong>قاضياً</strong>: مفعول به منصوب بالفتحة الظاهرة<br/>
 مررت بـ<strong>قاضٍ</strong>: مجرور بكسرة مقدرة على الياء المحذوفة
 </div>
 </div>
 </div>
 <div class="warn-box"><strong>القاعدة:</strong> الياء تحذف في الرفع والجر بدون (ال)، وتثبت في النصب وفي جميع الأحوال مع (ال).</div>
 </div>
-
-<div class="card"><div class="card-header"><div class="card-icon" style="background:#fce7f3">🔤</div><h2>الأسماء الخمسة — إعرابها</h2></div>
-<div class="rule-box">هي: أب، أم، أخ، حم، فو، ذو — تُعرب بالحروف بدل الحركات بشرط: الإضافة لغير ياء المتكلم.</div>
-<div class="table-wrap"><table><thead><tr><th>الحالة</th><th>العلامة</th><th>مثال</th></tr></thead><tbody>
-<tr><td>الرفع</td><td>الواو</td><td>جاء أبوكَ</td></tr>
-<tr><td>النصب</td><td>الألف</td><td>رأيت أباكَ</td></tr>
-<tr><td>الجر</td><td>الياء</td><td>مررت بأبيكَ</td></tr>
-</tbody></table></div>
-<div class="warn-box"><strong>إذا أُضيفت لياء المتكلم:</strong> تُعرب بحركات مقدرة: أبي، أخي، حمي.</div>
-</div>
-
-<div class="card"><div class="card-header"><div class="card-icon" style="background:#dcfce7">📝</div><h2>النعت (الصفة)</h2></div>
-<div class="rule-box">تابع يُكمّل منعوته ويوضحه، يتبعه في: الإعراب، التذكير/التأنيث، التعريف/التنكير، الإفراد/التثنية/الجمع.</div>
-<div class="two-col">
-<div><h4 style="color:var(--primary);margin-bottom:8px">النعت الحقيقي</h4>
-<p style="font-size:14px">يصف المنعوت نفسه مباشرةً.</p>
-<div class="example-box">جاء طالبٌ <strong>مجتهدٌ</strong><br>قرأت كتاباً <strong>مفيداً</strong></div></div>
-<div><h4 style="color:var(--primary);margin-bottom:8px">النعت السببي</h4>
-<p style="font-size:14px">يصف اسماً مرتبطاً بالمنعوت.</p>
-<div class="example-box">جاء طالبٌ <strong>مجتهدٌ أبوهُ</strong><br>(يصف الأب لا الطالب)</div></div>
-</div>
-<div class="note-box"><strong>النعت الجملة:</strong> المنعوت نكرة + الجملة تحتوي رابطاً.<br>مثال: جاء رجلٌ <strong>يحمل كتاباً</strong> — جملة في محل رفع نعت.</div>
-<div class="note-box"><strong>من الأسئلة:</strong> "شفته السفلى تتدلى على هيئة تثير الاشمئزاز"<br>نعتان: الأول (السفلى) مفرد — الثاني (تثير الاشمئزاز) جملة فعلية.</div>
-<h4 style="color:var(--primary);margin:15px 0 8px">📌 النعت شبه الجملة</h4>
-<div class="example-box">
-رأيت رجلاً <strong>في السوق</strong> ← شبه جملة (جار ومجرور) في محل نصب نعت<br>
-جاء طفلٌ <strong>عند الباب</strong> ← شبه جملة (ظرف) في محل رفع نعت
-</div>
-<h4 style="color:var(--primary);margin:15px 0 8px">📌 الموقع الإعرابي للجمل</h4>
-<div class="table-wrap"><table><thead><tr><th>الجملة</th><th>موقعها الإعرابي</th><th>الشرط</th></tr></thead><tbody>
-<tr><td>جملة بعد المبتدأ</td><td>في محل رفع <strong>خبر</strong></td><td>لها رابط يعود على المبتدأ</td></tr>
-<tr><td>جملة بعد نكرة</td><td>في محل رفع/نصب/جر <strong>نعت</strong></td><td>المنعوت نكرة دائماً</td></tr>
-<tr><td>جملة بعد معرفة</td><td>في محل نصب/رفع <strong>حال</strong></td><td>صاحب الحال معرفة</td></tr>
-<tr><td>جملة بعد مضاف إليه</td><td>في محل جر <strong>مضاف إليه</strong></td><td>المضاف يدل على زمن</td></tr>
-</tbody></table></div>
-<div class="example-box">
-الطالبُ <strong>يقرأ</strong> ← جملة في محل رفع <strong>خبر</strong> (المبتدأ معرفة)<br>
-جاء رجلٌ <strong>يحمل حقيبة</strong> ← جملة في محل رفع <strong>نعت</strong> (رجل نكرة)<br>
-رأيتُ الطالبَ <strong>يذاكر</strong> ← جملة في محل نصب <strong>حال</strong> (الطالب معرفة)
-</div>
-<h4 style="color:var(--primary);margin:15px 0 8px">📌 اسم الإشارة — نعت أم بدل؟</h4>
-<div class="comparison-box">
-<div class="comp-side green">
-<strong>معرفة + اسم إشارة = نعت</strong><br>
-الطالبُ <strong>هذا</strong> كسولٌ<br>
-(هذا: نعت للطالب)
-</div>
-<div class="comp-vs">أو</div>
-<div class="comp-side red">
-<strong>اسم إشارة + معرفة = بدل</strong><br>
-<strong>هذا</strong> الطالبُ كسولٌ<br>
-(الطالب: بدل من هذا)
-</div>
-</div>
-</div>
-
-<div class="card"><div class="card-header"><div class="card-icon" style="background:#e0f2fe">🔗</div><h2>المفعول به — المتعدي لمفعولين وثلاثة</h2></div>
-<div class="table-wrap"><table><thead><tr><th>النوع</th><th>الأفعال</th><th>مثال</th></tr></thead><tbody>
-<tr><td>متعدٍّ لمفعول واحد</td><td>كتب، قرأ، أكل</td><td>كتب زيدٌ <strong>الدرسَ</strong></td></tr>
-<tr><td>متعدٍّ لمفعولين (أصلهما م+خ)</td><td>ظن، حسب، رأى، علم</td><td>ظننتُ <strong>الأمرَ سهلاً</strong></td></tr>
-<tr><td>متعدٍّ لمفعولين (ليس أصلهما م+خ)</td><td>أعطى، منح، سأل، علّم</td><td>أعطيتُ <strong>الطالبَ كتاباً</strong></td></tr>
-<tr><td>متعدٍّ لثلاثة مفاعيل</td><td>أعلم، أرى، نبّأ، حدّث</td><td>أعلمتُ <strong>زيداً الأمرَ واضحاً</strong></td></tr>
-</tbody></table></div>
-<div class="warn-box"><strong>الفرق:</strong> أعطى تنصب مفعولين لكن ليس أصلهما مبتدأ وخبر. أما ظن فمفعولاها أصلهما مبتدأ وخبر: (الأمر سهل).</div>
-</div>
-
-<div class="card"><div class="card-header"><div class="card-icon" style="background:#f3e8ff">📐</div><h2>الأفعال الخمسة — إعرابها</h2></div>
-<div class="rule-box">كل فعل مضارع اتصل به: ألف الاثنين، واو الجماعة، أو ياء المخاطبة.</div>
-<div class="table-wrap"><table><thead><tr><th>الحالة</th><th>العلامة</th><th>مثال</th></tr></thead><tbody>
-<tr><td>الرفع</td><td>ثبوت النون</td><td>يكتبونَ / يكتبانِ / تكتبينَ</td></tr>
-<tr><td>النصب</td><td>حذف النون</td><td>لن يكتبوا / لن يكتبا / لن تكتبي</td></tr>
-<tr><td>الجزم</td><td>حذف النون</td><td>لم يكتبوا / لم يكتبا / لم تكتبي</td></tr>
-</tbody></table></div>
-<div class="example-box"><strong>إعراب:</strong> (لن يكتبوا الواجب)<br>يكتبوا: فعل مضارع منصوب بلن، وعلامة نصبه حذف النون لأنه من الأفعال الخمسة، وواو الجماعة في محل رفع فاعل.</div>
-</div>
-
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#e0f2fe">🔗</div><h2>حروف الجر ومعانيها</h2></div>
 <div class="rule-box">تجر الاسم بعدها وتربطه بما قبله. الاسم بعدها: اسم مجرور.</div>
 <div class="table-wrap"><table><thead><tr><th>الحرف</th><th>المعنى الأساسي</th><th>مثال</th></tr></thead><tbody>
@@ -702,7 +1001,6 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </tbody></table></div>
 <div class="note-box"><strong>الجار والمجرور</strong> يتعلقان دائماً بفعل أو شبه فعل قبلهما، ويكونان في محل نصب أو رفع حسب موقعهما من الجملة.</div>
 </div>
-
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fef3c7">🔗</div><h2>حروف العطف ومعانيها</h2></div>
 <div class="table-wrap"><table><thead><tr><th>الحرف</th><th>المعنى</th><th>مثال</th></tr></thead><tbody>
 <tr><td>الواو</td><td>مطلق الجمع (لا ترتيب)</td><td>جاء علي وخالد</td></tr>
@@ -715,8 +1013,7 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </tbody></table></div>
 </div>
 </div>
-
-<div id="sarf" class="section">
+<div class="section" id="sarf">
 <h2 class="section-title">🔤 الصرف — ملخص شامل</h2>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#dbeafe">👤</div><h2>اسم الفاعل — الصياغة الكاملة</h2></div>
 <div class="table-wrap"><table><thead><tr><th>نوع الفعل</th><th>الوزن/الطريقة</th><th>أمثلة</th><th>ملاحظات</th></tr></thead><tbody>
@@ -726,14 +1023,68 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td>غير ثلاثي</td><td>مضارع + ميم مضمومة + كسر ما قبل الآخر</td><td>استخرج←مُستخرِج، انطلق←مُنطلِق</td><td>—</td></tr>
 <tr><td>غير ثلاثي معتل اللام</td><td>تحذف في الرفع والجر</td><td>أعطى←مُعطٍ، تولى←متولٍ</td><td>—</td></tr>
 </tbody></table></div></div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. ما اسم الفاعل من (باع)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) بايع</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) بائع</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) مبيع</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) بيّاع</div>
+</div>
+<div class="mini-exp">💡 باع معتل العين بالألف → الألف تقلب همزة مكسورة: بائع.</div>
+</div>
+<div class="mini-q" data-correct="3" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. ما اسم الفاعل من (استخرج)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) خارج</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) مُخرِج</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) مُستخرَج</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) مُستخرِج</div>
+</div>
+<div class="mini-exp">💡 غير الثلاثي: مضارع (يستخرج) + ميم مضمومة + كسر ما قبل الآخر = مُستخرِج.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">3. ما اسم الفاعل من (دعا) في حالة النصب؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) داعٍ</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) داعياً</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) الداعي</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) دعّاء</div>
+</div>
+<div class="mini-exp">💡 معتل اللام في النصب: تثبت الياء = داعياً (الياء ظاهرة).</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fce7f3">📦</div><h2>اسم المفعول — الصياغة الكاملة</h2></div>
 <div class="table-wrap"><table><thead><tr><th>نوع الفعل</th><th>الوزن/الطريقة</th><th>أمثلة</th></tr></thead><tbody>
 <tr><td>ثلاثي</td><td>مَفعول</td><td>كتب←مكتوب، شرب←مشروب، قال←مقول، باع←مبيع</td></tr>
 <tr><td>غير ثلاثي</td><td>مضارع + ميم مضمومة + فتح ما قبل الآخر</td><td>استخرج←مُستخرَج، اقتبس←مُقتبَس، انتخب←مُنتخَب</td></tr>
 </tbody></table></div>
-<div class="warn-box"><strong>قاعدة:</strong> الفرق بين اسم الفاعل واسم المفعول من غير الثلاثي:<br>اسم الفاعل: مُستخرِج (كسرة) / اسم المفعول: مُستخرَج (فتحة)</div></div>
-
+<div class="warn-box"><strong>قاعدة:</strong> الفرق بين اسم الفاعل واسم المفعول من غير الثلاثي:<br/>اسم الفاعل: مُستخرِج (كسرة) / اسم المفعول: مُستخرَج (فتحة)</div></div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. الفرق بين مُستخرِج ومُستخرَج:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) لا فرق</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) الأول اسم فاعل (كسرة) والثاني اسم مفعول (فتحة)</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) الأول اسم مفعول والثاني اسم فاعل</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) كلاهما اسم مفعول</div>
+</div>
+<div class="mini-exp">💡 الكسرة = اسم فاعل / الفتحة = اسم مفعول.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. ما اسم المفعول من (قال)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) قائل</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) مقول</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) قوّال</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) مُقال</div>
+</div>
+<div class="mini-exp">💡 الثلاثي على وزن مَفعول: قال ← مَقُول.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#d1fae5">📐</div><h2>المصدر — أنواعه</h2></div>
 <div class="two-col">
 <div><h4 style="color:var(--primary);margin-bottom:10px">المصدر الصريح</h4>
@@ -741,9 +1092,8 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <div class="example-box">كتَب ← كِتابة / فهِم ← فَهم / انطلق ← انطلاق</div></div>
 <div><h4 style="color:var(--primary);margin-bottom:10px">المصدر المؤوّل</h4>
 <div class="rule-box" style="margin-top:0;font-size:13px">أن/أنّ + الجملة ← يؤول بمصدر صريح.</div>
-<div class="example-box">أعجبني <strong>أنك كريم</strong> ← (كرمُك) فاعل<br>علمتُ <strong>أنك مجتهد</strong> ← (اجتهادَك) مفعول به</div></div>
+<div class="example-box">أعجبني <strong>أنك كريم</strong> ← (كرمُك) فاعل<br/>علمتُ <strong>أنك مجتهد</strong> ← (اجتهادَك) مفعول به</div></div>
 </div></div>
-
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#dcfce7">🔬</div><h2>الفعل المجرد والمزيد</h2></div>
 <div class="rule-box">
 <strong>المجرد:</strong> كل حروفه أصلية (لا زائد فيه) — <strong>المزيد:</strong> زيد فيه حرف أو أكثر على حروفه الأصلية.
@@ -755,10 +1105,32 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td><span class="badge badge-yellow">ثلاثي مزيد بحرفين</span></td><td>انفعل / افتعل / تفعَّل / تفاعل</td><td>انكسر / اجتمع / تكلَّم / تعاون</td></tr>
 <tr><td><span class="badge badge-purple">ثلاثي مزيد بثلاثة</span></td><td>استفعل / افعوعل</td><td>استخرج / اغدودن</td></tr>
 </tbody></table></div>
-<div class="warn-box"><strong>من الأسئلة الحقيقية:</strong> البيت "وإذا ما أظلَّ رأسَك همٌّ / قصِّر البحثَ فيه كيلا يطولا"<br>
+<div class="warn-box"><strong>من الأسئلة الحقيقية:</strong> البيت "وإذا ما أظلَّ رأسَك همٌّ / قصِّر البحثَ فيه كيلا يطولا"<br/>
 أظلَّ: رباعي مزيد (فَعَّل) / قصِّر: رباعي مزيد / يطولا: ثلاثي مجرد → الترتيب: <strong>مزيد، مزيد، مجرد</strong></div>
 </div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (أكرم، ذهب، اجتمع) — مجرد أم مزيد؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) كلها مجردة</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) كلها مزيدة</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) أكرم: مزيد / ذهب: مجرد / اجتمع: مزيد</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) أكرم: مجرد / ذهب: مزيد / اجتمع: مجرد</div>
+</div>
+<div class="mini-exp">💡 أكرم رباعي مزيد / ذهب ثلاثي مجرد / اجتمع خماسي مزيد.</div>
+</div>
+<div class="mini-q" data-correct="3" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. ما وزن الفعل (استخرج)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) فعّل</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) أفعل</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) افتعل</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) استفعل</div>
+</div>
+<div class="mini-exp">💡 استخرج: استفعل — سداسي مزيد بثلاثة أحرف.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#e0f2fe">🔢</div><h2>اسم المرة واسم الهيئة</h2></div>
 <div class="two-col">
 <div>
@@ -780,7 +1152,29 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </div>
 </div>
 </div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. ما اسم المرة من (ضرب)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) ضِرْبَة</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) ضَرْبَة</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) ضَرَبَة</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) ضَرُبَة</div>
+</div>
+<div class="mini-exp">💡 الثلاثي: اسم المرة على وزن فَعْلَة (بفتح الفاء).</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. الفرق بين فَعْلَة وفِعْلَة:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) لا فرق</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) فَعْلَة: اسم مرة / فِعْلَة: اسم هيئة</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) فِعْلَة: اسم مرة / فَعْلَة: اسم هيئة</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) كلاهما اسم هيئة</div>
+</div>
+<div class="mini-exp">💡 فَعْلَة (فتح الفاء) = اسم المرة / فِعْلَة (كسر الفاء) = اسم الهيئة.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fce7f3">⏱️</div><h2>المصدر الميمي + اسما الزمان والمكان</h2></div>
 <div class="rule-box"><strong>الثلاثة تُصاغ على نفس الوزن</strong> — التمييز بالسياق!</div>
 <div class="table-wrap"><table><thead><tr><th>النوع</th><th>المعنى</th><th>الوزن من الثلاثي</th><th>الوزن من غير الثلاثي</th><th>مثال</th></tr></thead><tbody>
@@ -788,15 +1182,37 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td><span class="badge badge-green">اسم الزمان</span></td><td>يدل على وقت وقوع الفعل</td><td>مَفْعَل / مَفْعِل</td><td>نفس الوزن</td><td>مَوْعِد (وقت الوعد)</td></tr>
 <tr><td><span class="badge badge-yellow">اسم المكان</span></td><td>يدل على مكان وقوع الفعل</td><td>مَفْعَل / مَفْعِل</td><td>نفس الوزن</td><td>مَدْرَسَة (مكان الدراسة)</td></tr>
 </tbody></table></div>
-<div class="note-box"><strong>كيف تفرق بينها في السياق:</strong><br>
-المصدر الميمي: يصلح أن تضع بدله المصدر الأصلي → <em>مَذْهَبُه حسن</em> = <em>ذهابه حسن</em><br>
-اسم الزمان: يدل على وقت → <em>موعدنا غداً</em> = وقت لقائنا<br>
+<div class="note-box"><strong>كيف تفرق بينها في السياق:</strong><br/>
+المصدر الميمي: يصلح أن تضع بدله المصدر الأصلي → <em>مَذْهَبُه حسن</em> = <em>ذهابه حسن</em><br/>
+اسم الزمان: يدل على وقت → <em>موعدنا غداً</em> = وقت لقائنا<br/>
 اسم المكان: يدل على مكان → <em>المدرسة قريبة</em> = مكان الدراسة
 </div>
-<div class="example-box"><strong>من الاختبار الحقيقي:</strong> "أقام المؤذن الصلاة" — اسم المرة من (أقام): إقامة واحدة<br>
+<div class="example-box"><strong>من الاختبار الحقيقي:</strong> "أقام المؤذن الصلاة" — اسم المرة من (أقام): إقامة واحدة<br/>
 <em>المَدْرَسَة</em> ← اسم مكان / <em>المَوْعِد</em> ← اسم زمان / <em>المَذْهَب</em> ← مصدر ميمي</div>
 </div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. كيف تفرق بين المصدر الميمي واسم المكان واسم الزمان؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) بالشكل فقط</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) إذا دل على مكان = اسم مكان / على وقت = اسم زمان / يمكن تعويضه بمصدر أصلي = مصدر ميمي</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) لا فرق بينهم</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) بالوزن فقط</div>
+</div>
+<div class="mini-exp">💡 استبدله بمصدر: إن صح = ميمي. إن دل على مكان = مكان. إن دل على وقت = زمان.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (مَدرسة / مَوعد / مَذهب) — صنّف كلاً منها:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) كلها أسماء مكان</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) مدرسة: مكان / موعد: زمان / مذهب: مصدر ميمي</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) مدرسة: ميمي / موعد: مكان / مذهب: زمان</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) كلها مصادر ميمية</div>
+</div>
+<div class="mini-exp">💡 مدرسة: مكان الدراسة / موعد: وقت اللقاء / مذهب: ذهابه = مصدر ميمي.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fce7f3">🌟</div><h2>الصفة المشبهة واسم التفضيل</h2></div>
 <div class="two-col">
 <div>
@@ -808,7 +1224,7 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td>فَعَال / فُعَال</td><td>جبان، شجاع</td></tr>
 <tr><td>أفعل (للألوان والعيوب)</td><td>أحمر، أعمى، أصم</td></tr>
 </tbody></table></div>
-<div class="note-box" style="margin-top:8px">الفرق بين اسم الفاعل والصفة المشبهة:<br>اسم الفاعل: صفة <strong>متجددة</strong> (كاتب = يكتب الآن)<br>الصفة المشبهة: صفة <strong>ثابتة</strong> (كريم = دائماً كريم)</div>
+<div class="note-box" style="margin-top:8px">الفرق بين اسم الفاعل والصفة المشبهة:<br/>اسم الفاعل: صفة <strong>متجددة</strong> (كاتب = يكتب الآن)<br/>الصفة المشبهة: صفة <strong>ثابتة</strong> (كريم = دائماً كريم)</div>
 </div>
 <div>
 <h4 style="color:var(--primary);margin-bottom:8px">اسم التفضيل</h4>
@@ -819,12 +1235,34 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td>مع (ال)</td><td>محمد الأكرمُ</td></tr>
 <tr><td>مع المضاف إليه</td><td>محمد أكرمُ الناسِ</td></tr>
 </tbody></table></div>
-<div class="warn-box" style="margin-top:8px">شروط صياغته: الفعل ثلاثي، متصرف، غير منفي، قابل للتفاوت، تام، لا يدل على لون أو عيب.<br>
+<div class="warn-box" style="margin-top:8px">شروط صياغته: الفعل ثلاثي، متصرف، غير منفي، قابل للتفاوت، تام، لا يدل على لون أو عيب.<br/>
 <strong>مثال:</strong> كبُر ← أكبر / حسُن ← أحسن</div>
 </div>
 </div>
 </div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. ما الفرق بين (كاتب) و(كريم)؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) لا فرق</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) كاتب: صفة مشبهة / كريم: اسم فاعل</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) كاتب: اسم فاعل (صفة متجددة) / كريم: صفة مشبهة (صفة ثابتة)</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) كلاهما اسم فاعل</div>
+</div>
+<div class="mini-exp">💡 اسم الفاعل: صفة متجددة / الصفة المشبهة: صفة ثابتة في صاحبها.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. ما اسم التفضيل من (حسُن)؟ وما شرطه؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) حسَّان — بدون شرط</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) أحسن — على وزن أفعل</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) مُحسِن — كاسم الفاعل</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) حسيب — سماعاً فقط</div>
+</div>
+<div class="mini-exp">💡 اسم التفضيل على وزن أفعل: حسُن ← أحسن.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fef3c7">🔍</div><h2>البحث في المعجم — الجذر اللغوي</h2></div>
 <div class="steps">
 <div class="step" data-num="1"><div class="step-title">ردّ الكلمة إلى مفردها</div><div class="step-body">أبطال → بطل</div></div>
@@ -832,7 +1270,6 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <div class="step" data-num="3"><div class="step-title">ابحث في المعجم حسب الترتيب الهجائي</div><div class="step-body">في باب الميم، فصل الكاف</div></div>
 </div>
 <div class="note-box"><strong>تنبيه:</strong> كلمة "ارتباك" جذرها: ر-ب-ك (وليس ارت) — التاء حرف زيادة من وزن افتعل.</div></div>
-
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fef3c7">🔠</div><h2>الفعل المعتل — أنواعه</h2></div>
 <div class="table-wrap"><table><thead><tr><th>النوع</th><th>التعريف</th><th>أمثلة</th><th>ملاحظة إعرابية</th></tr></thead><tbody>
 <tr><td><span class="badge badge-blue">المثال</span></td><td>فاؤه حرف علة</td><td>وَعَد، وَصَل، يَسَر</td><td>تحذف الواو في المضارع: يَعِد، يَصِل</td></tr>
@@ -841,9 +1278,8 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td><span class="badge badge-purple">اللفيف المفروق</span></td><td>فاؤه ولامه علة</td><td>وقى، وعى</td><td>يُعامَل معاملة الناقص في الجزم</td></tr>
 <tr><td><span class="badge badge-red">اللفيف المقرون</span></td><td>عينه ولامه علة</td><td>طوى، نوى</td><td>يُعامَل معاملة الناقص في الجزم</td></tr>
 </tbody></table></div>
-<div class="warn-box"><strong>الجزم في المعتل الآخر (الناقص):</strong><br>المعتل بالواو → تُحذف الواو: لم يدعُ ← لم يدعُ (قبل الحذف: يدعو)<br>المعتل بالياء → تُحذف الياء: لم يرمِ ← لم يرمِ (قبل الحذف: يرمي)<br>المعتل بالألف → تُحذف الألف: لم يخشَ ← لم يخشَ (قبل الحذف: يخشى)</div>
+<div class="warn-box"><strong>الجزم في المعتل الآخر (الناقص):</strong><br/>المعتل بالواو → تُحذف الواو: لم يدعُ ← لم يدعُ (قبل الحذف: يدعو)<br/>المعتل بالياء → تُحذف الياء: لم يرمِ ← لم يرمِ (قبل الحذف: يرمي)<br/>المعتل بالألف → تُحذف الألف: لم يخشَ ← لم يخشَ (قبل الحذف: يخشى)</div>
 </div>
-
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#dbeafe">📊</div><h2>جمع المذكر السالم — الضبط الصحيح</h2></div>
 <div class="rule-box">يُرفع بالواو ويُنصب ويُجر بالياء، وتُحذف نونه عند الإضافة.</div>
 <div class="table-wrap"><table><thead><tr><th>الحالة</th><th>العلامة</th><th>مثال</th></tr></thead><tbody>
@@ -852,11 +1288,10 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td>الجر</td><td>الياء + نون</td><td>مررت بالمعلمينَ</td></tr>
 <tr><td>المضاف (حذف النون)</td><td>الواو أو الياء بدون نون</td><td>جاء معلمو المدرسة / رأيت معلمي المدرسة</td></tr>
 </tbody></table></div>
-<div class="warn-box"><strong>المهم في الأسئلة — إن وجمع المذكر السالم:</strong><br>إن المعلمِينَ مجتهدون (اسم إن منصوب بالياء)<br>لعل الفاعلِينَ يُكافأون (اسم لعل منصوب بالياء)</div>
+<div class="warn-box"><strong>المهم في الأسئلة — إن وجمع المذكر السالم:</strong><br/>إن المعلمِينَ مجتهدون (اسم إن منصوب بالياء)<br/>لعل الفاعلِينَ يُكافأون (اسم لعل منصوب بالياء)</div>
 </div>
 </div>
-
-<div id="balagha" class="section">
+<div class="section" id="balagha">
 <h2 class="section-title">🌟 البلاغة — ملخص شامل</h2>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fce7f3">🎭</div><h2>الصور البيانية الأربع</h2></div>
 <div class="accordion"><div class="accordion-header" onclick="toggleAcc(this)" style="background:var(--g3)"><span>1️⃣ التشبيه</span><span class="accordion-arrow">▼</span></div>
@@ -875,14 +1310,13 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <div class="two-col" style="margin-top:15px">
 <div class="card" style="border-top:3px solid var(--accent)"><h4 style="color:var(--accent);margin-bottom:10px">الاستعارة التصريحية</h4>
 <p style="font-size:14px">حُذف المشبه وصُرِّح بالمشبه به.</p>
-<div class="example-box" style="margin:10px 0 0">"رأيت أسداً في المعركة"<br>(الأسد = المشبه به المذكور / الرجل الشجاع = المشبه المحذوف)</div></div>
+<div class="example-box" style="margin:10px 0 0">"رأيت أسداً في المعركة"<br/>(الأسد = المشبه به المذكور / الرجل الشجاع = المشبه المحذوف)</div></div>
 <div class="card" style="border-top:3px solid var(--accent2)"><h4 style="color:var(--accent2);margin-bottom:10px">الاستعارة المكنية</h4>
 <p style="font-size:14px">حُذف المشبه به وأُبقي على لازمه.</p>
-<div class="example-box" style="margin:10px 0 0">﴿والصبح إذا تنفّس﴾<br>الصبح (مشبه) / الإنسان (محذوف) / تنفّس (اللازم المبقى)</div></div>
+<div class="example-box" style="margin:10px 0 0">﴿والصبح إذا تنفّس﴾<br/>الصبح (مشبه) / الإنسان (محذوف) / تنفّس (اللازم المبقى)</div></div>
 </div>
-<div class="note-box"><strong>كيف تحدد الاستعارة المكنية:</strong><br>ابحث عن فعل أو صفة غير منطقية مع موضوعها → هذا اللازم يدل على المشبه به المحذوف.</div>
+<div class="note-box"><strong>كيف تحدد الاستعارة المكنية:</strong><br/>ابحث عن فعل أو صفة غير منطقية مع موضوعها → هذا اللازم يدل على المشبه به المحذوف.</div>
 </div></div>
-
 <div class="accordion" style="margin-top:10px"><div class="accordion-header" onclick="toggleAcc(this)" style="background:linear-gradient(135deg,#1a3a5c,#2e5f8a)"><span>5️⃣ أغراض النهي البلاغية — تفصيل</span><span class="accordion-arrow">▼</span></div>
 <div class="accordion-body">
 <div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>الغرض</th><th>المثال</th><th>الشرح</th></tr></thead><tbody>
@@ -907,14 +1341,56 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <div class="accordion-body">
 <div class="rule-box" style="margin-top:15px">استعمال الكلمة في غير معناها الأصلي لعلاقة مع قرينة.</div>
 <div class="comparison-box" style="margin-top:15px">
-<div class="comp-side green"><strong>المجاز المرسل</strong><br>العلاقة غير المشابهة<br>(جزء/كل — سبب/مسبب...)</div>
+<div class="comp-side green"><strong>المجاز المرسل</strong><br/>العلاقة غير المشابهة<br/>(جزء/كل — سبب/مسبب...)</div>
 <div class="comp-vs">VS</div>
-<div class="comp-side red"><strong>الاستعارة</strong><br>العلاقة المشابهة<br>(تشبيه بليغ حُذف أحد طرفيه)</div>
+<div class="comp-side red"><strong>الاستعارة</strong><br/>العلاقة المشابهة<br/>(تشبيه بليغ حُذف أحد طرفيه)</div>
 </div>
-<div class="note-box"><strong>الإسناد المجازي:</strong> إسناد الفعل لغير فاعله الحقيقي.<br>مثال: قامت اللغة بترجمة العلوم (اللغة لا تقوم حقيقةً).</div>
+<div class="note-box"><strong>الإسناد المجازي:</strong> إسناد الفعل لغير فاعله الحقيقي.<br/>مثال: قامت اللغة بترجمة العلوم (اللغة لا تقوم حقيقةً).</div>
 </div></div>
 </div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (رأيت أسداً في الميدان) — نوع الصورة البيانية:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) تشبيه بليغ</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) استعارة تصريحية</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) استعارة مكنية</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) كناية</div>
+</div>
+<div class="mini-exp">💡 استعارة تصريحية: حُذف المشبه (الرجل الشجاع) وصُرِّح بالمشبه به (أسداً).</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (والصبح إذا تنفّس) — نوع الصورة:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) تشبيه</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) استعارة مكنية</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) كناية</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) مجاز مرسل</div>
+</div>
+<div class="mini-exp">💡 استعارة مكنية: شُبِّه الصبح بإنسان، حُذف المشبه به وبقي لازمه (تنفّس).</div>
+</div>
+<div class="mini-q" data-correct="3" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">3. (زيد أسد) — نوع التشبيه:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) مرسل مجمل</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) مرسل مفصل</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) مؤكد</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) بليغ</div>
+</div>
+<div class="mini-exp">💡 البليغ: حُذفت الأداة ووجه الشبه معاً.</div>
+</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">4. (يده طويلة) — نوع الصورة:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) تشبيه</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) استعارة</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) كناية عن السرقة</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) مجاز</div>
+</div>
+<div class="mini-exp">💡 كناية عن صفة السرقة.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#e0f2fe">🏆</div><h2>المدح والذم والقسم والتعجب — إنشاء غير طلبي</h2></div>
 <div class="two-col">
 <div>
@@ -931,10 +1407,10 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <h4 style="color:var(--primary);margin-bottom:8px">القسم وأدواته</h4>
 <div class="rule-box" style="margin-top:0">أدوات القسم: <strong>الواو / التاء / الباء / لعمرك / أيمُ الله</strong></div>
 <div class="example-box" style="margin-top:8px">
-واللهِ لأجتهدَنَّ ← (واو القسم)<br>
-تاللهِ لأكيدَنَّ أصنامكم ← (تاء القسم)<br>
-باللهِ أخبرني ← (باء القسم)<br>
-لعمرُك إنهم لفي سكرتهم ← (قسم بالعمر)<br>
+واللهِ لأجتهدَنَّ ← (واو القسم)<br/>
+تاللهِ لأكيدَنَّ أصنامكم ← (تاء القسم)<br/>
+باللهِ أخبرني ← (باء القسم)<br/>
+لعمرُك إنهم لفي سكرتهم ← (قسم بالعمر)<br/>
 أيمُ اللهِ لقد صدق ← (صيغة قسمية)
 </div>
 <div class="note-box" style="margin-top:8px">جواب القسم يقترن باللام + نون التوكيد أو (إن) المكسورة المقرونة باللام.</div>
@@ -942,13 +1418,35 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 </div>
 <h4 style="color:var(--primary);margin:15px 0 8px">التعجب — صيغتاه القياسيتان</h4>
 <div class="comparison-box">
-<div class="comp-side green"><strong>ما أفعلَه</strong><br>ما أجملَ السماءَ!<br>ما أصبرَهم على النار!</div>
+<div class="comp-side green"><strong>ما أفعلَه</strong><br/>ما أجملَ السماءَ!<br/>ما أصبرَهم على النار!</div>
 <div class="comp-vs">أو</div>
-<div class="comp-side red"><strong>أفعِل به</strong><br>أكرِم بالعربيِّ!<br>أجمِل بالسماءِ!</div>
+<div class="comp-side red"><strong>أفعِل به</strong><br/>أكرِم بالعربيِّ!<br/>أجمِل بالسماءِ!</div>
 </div>
 <div class="note-box"><strong>التعجب السماعي (يُحفظ):</strong> لله دره فارساً! / يا للهول! / سبحان الله!</div>
 </div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (واللهِ لأجتهدَنَّ) — ما أداة القسم؟ وما جوابه؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) التاء / التوكيد</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) الواو / لأجتهدَنَّ (لام+نون التوكيد)</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) الباء / أجتهد</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) لعمرك / النجاح</div>
+</div>
+<div class="mini-exp">💡 واو القسم + الجواب: لأجتهدَنَّ (لام القسم + نون التوكيد).</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (ما أجملَ السماءَ!) — ما صيغة التعجب وما نوعها؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) أفعِل به — سماعية</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) ما أفعله — قياسية</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) نعم السماء — مدح</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) سبحان الله — سماعية</div>
+</div>
+<div class="mini-exp">💡 ما أفعله: الصيغة الأولى للتعجب القياسي.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fef9c3">📊</div><h2>أسلوب القصر والإسناد</h2></div>
 <div class="table-wrap"><table><thead><tr><th>الطريقة</th><th>المقصور عليه</th><th>مثال</th></tr></thead><tbody>
 <tr><td><span class="badge badge-blue">النفي + إلا</span></td><td>ما بعد إلا</td><td>ما فاز إلا المجتهدُ</td></tr>
@@ -956,8 +1454,30 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td><span class="badge badge-yellow">تقديم ما حقه التأخير</span></td><td>المقدَّم</td><td>إياك نعبد</td></tr>
 <tr><td><span class="badge badge-purple">العطف (لا/بل/لكن)</span></td><td>قبل لا / بعد بل ولكن</td><td>الأرض كروية لا مسطحة</td></tr>
 </tbody></table></div>
-<div class="note-box"><strong>نوعا القصر:</strong><br>قصر موصوف على صفة: ما محمد إلا رسول<br>قصر صفة على موصوف: لا خالق إلا الله</div></div>
-
+<div class="note-box"><strong>نوعا القصر:</strong><br/>قصر موصوف على صفة: ما محمد إلا رسول<br/>قصر صفة على موصوف: لا خالق إلا الله</div></div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (إنما النجاحُ بالاجتهاد) — ما المقصور وما المقصور عليه؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) المقصور: الاجتهاد / المقصور عليه: النجاح</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) المقصور: النجاح / المقصور عليه: الاجتهاد</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) إنما هي المقصور عليه</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) لا قصر في الجملة</div>
+</div>
+<div class="mini-exp">💡 في إنما: المقصور عليه في آخر الجملة = الاجتهاد.</div>
+</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (إياك نعبد) — ما أداة القصر؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) النفي والاستثناء</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) إنما</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) التقديم (قُدِّم المفعول)</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) العطف بلا</div>
+</div>
+<div class="mini-exp">💡 التقديم: قُدِّم المفعول (إياك) على الفعل والفاعل إفادةً للقصر.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#e0f2fe">💭</div><h2>قيمة (لو) البلاغية والحجاجية</h2></div>
 <div class="rule-box">لو: حرف امتناع الجواب لامتناع الشرط.</div>
 <div class="table-wrap"><table><thead><tr><th>الاستعمال</th><th>المعنى</th><th>مثال</th></tr></thead><tbody>
@@ -966,9 +1486,31 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td>التمني</td><td>الرغبة في شيء بعيد</td><td>لو يعود الزمان</td></tr>
 <tr><td>التعليل والحجج</td><td>بيان السبب والنتيجة</td><td>لو كان ما تقول صحيحاً لظهر أثره</td></tr>
 </tbody></table></div></div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (لو اجتهدتَ لنجحتَ) — ماذا تفيد لو؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) التمني فقط</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) امتناع الجواب لامتناع الشرط: لم تجتهد فلم تنجح</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) التحقق والوقوع</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) الشرط في المستقبل</div>
 </div>
+<div class="mini-exp">💡 لو: حرف امتناع لامتناع — الشرط لم يقع فالجواب لم يقع.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. ما الفرق بين لو ولولا؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) لا فرق</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) لو: امتناع لامتناع / لولا: امتناع لوجود</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) لو: شرط مستقبل / لولا: شرط ماضٍ</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) كلاهما للتمني</div>
+</div>
+<div class="mini-exp">💡 لو: امتناع الجواب لامتناع الشرط / لولا: امتناع الجواب لوجود الشرط: (لولا الماء لهلكنا).</div>
+</div>
+</div></div>
 
-<div id="imla" class="section">
+<div class="section" id="imla">
 <h2 class="section-title">✍️ الإملاء — ملخص شامل</h2>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fce7f3">✍️</div><h2>التاء المربوطة والتاء المفتوحة والهاء</h2></div>
 <div class="table-wrap"><table><thead><tr><th>النوع</th><th>الفرق</th><th>علامة التمييز</th><th>أمثلة</th></tr></thead><tbody>
@@ -979,28 +1521,71 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <div class="rule-box"><strong>قاعدة سهلة:</strong> إذا استطعت تحويل الكلمة للمذكر وحُذفت التاء = تاء مربوطة (مدرسة ← مدرس). إذا بقيت = تاء مفتوحة.</div>
 <div class="warn-box"><strong>أسماء تُكتب بالتاء المفتوحة رغم أنها مؤنثة:</strong> هند، زينب، سعاد، مريم، نعمت (لأنها مؤنث غير حقيقي أو أعجمي).</div>
 </div>
-
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#d1fae5">🔠</div><h2>همزة القطع وهمزة الوصل</h2></div>
 <div class="comparison-box">
-<div class="comp-side green"><strong>همزة القطع (أ / إ / ء)</strong><br>تُنطق دائماً<br><ul style="text-align:right;font-size:13px;padding-right:15px;margin-top:8px"><li>ماضي الرباعي: أكرم، أعطى</li><li>الثلاثي المهموز: أخذ</li><li>المصادر: إكرام، إسراع</li><li>أغلب الأسماء: أستاذ، إنسان</li><li>جميع الحروف إلا (ال) التعريف</li></ul></div>
+<div class="comp-side green"><strong>همزة القطع (أ / إ / ء)</strong><br/>تُنطق دائماً<br/><ul style="text-align:right;font-size:13px;padding-right:15px;margin-top:8px"><li>ماضي الرباعي: أكرم، أعطى</li><li>الثلاثي المهموز: أخذ</li><li>المصادر: إكرام، إسراع</li><li>أغلب الأسماء: أستاذ، إنسان</li><li>جميع الحروف إلا (ال) التعريف</li></ul></div>
 <div class="comp-vs">VS</div>
-<div class="comp-side red"><strong>همزة الوصل (ا)</strong><br>تُنطق في الابتداء وتسقط وصلاً<br><ul style="text-align:right;font-size:13px;padding-right:15px;margin-top:8px"><li>(ال) التعريف</li><li>الأسماء: ابن، ابنة، اسم، امرؤ، امرأة، اثنان</li><li>الخماسي والسداسي: انطلق، استخرج</li><li>مصادرهما: انطلاق، استخراج</li></ul></div>
+<div class="comp-side red"><strong>همزة الوصل (ا)</strong><br/>تُنطق في الابتداء وتسقط وصلاً<br/><ul style="text-align:right;font-size:13px;padding-right:15px;margin-top:8px"><li>(ال) التعريف</li><li>الأسماء: ابن، ابنة، اسم، امرؤ، امرأة، اثنان</li><li>الخماسي والسداسي: انطلق، استخرج</li><li>مصادرهما: انطلاق، استخراج</li></ul></div>
 </div>
-<div class="warn-box"><strong>قاعدة:</strong> ماضي الرباعي وأمره ومصدره ← همزة قطع: أسلم / أسلِم / إسلاماً<br>الخماسي والسداسي ← همزة وصل: انطلق / انطلاق</div>
-<div class="note-box"><strong>همزة الوصل في أمر الثلاثي:</strong><br>
-أمر الفعل الثلاثي دائماً همزة وصل: اكتُبْ / اشرَبْ / اذهَبْ / ارمِ / ادعُ<br>
+<div class="warn-box"><strong>قاعدة:</strong> ماضي الرباعي وأمره ومصدره ← همزة قطع: أسلم / أسلِم / إسلاماً<br/>الخماسي والسداسي ← همزة وصل: انطلق / انطلاق</div>
+<div class="note-box"><strong>همزة الوصل في أمر الثلاثي:</strong><br/>
+أمر الفعل الثلاثي دائماً همزة وصل: اكتُبْ / اشرَبْ / اذهَبْ / ارمِ / ادعُ<br/>
 <strong>ضابط:</strong> إذا كان الفعل الماضي ثلاثياً ← أمره بهمزة وصل. إذا كان رباعياً ← أمره بهمزة قطع (أكرِم، أعطِ)
 </div></div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (انطلق / أكرم / استخرج) — نوع الهمزة:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) كلها قطع</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) انطلق: وصل / أكرم: قطع / استخرج: وصل</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) كلها وصل</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) انطلق: قطع / أكرم: وصل / استخرج: قطع</div>
+</div>
+<div class="mini-exp">💡 الخماسي والسداسي: وصل / الرباعي وأمره ومصدره: قطع.</div>
+</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (اكتُبْ) vs (أكرِمْ) — ما الفرق في الهمزة؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) كلاهما همزة قطع</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) كلاهما همزة وصل</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) اكتُبْ: وصل (أمر ثلاثي) / أكرِمْ: قطع (أمر رباعي)</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) اكتُبْ: قطع / أكرِمْ: وصل</div>
+</div>
+<div class="mini-exp">💡 أمر الثلاثي: وصل / أمر الرباعي: قطع.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fef3c7">✒️</div><h2>الهمزة المتوسطة</h2></div>
-<div class="rule-box">تُكتب على الحرف الذي يجانس حركة الهمزة. أولوية الحركات: الكسر > الضم > الفتح > السكون.</div>
+<div class="rule-box">تُكتب على الحرف الذي يجانس حركة الهمزة. أولوية الحركات: الكسر &gt; الضم &gt; الفتح &gt; السكون.</div>
 <div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>الحالة</th><th>تُكتب على</th><th>مثال</th></tr></thead><tbody>
 <tr><td>مكسورة أو ما قبلها مكسور</td><td>ياء (ئ)</td><td>سُئِل، بئر، فئة، قائل</td></tr>
 <tr><td>مضمومة أو ما قبلها مضموم</td><td>واو (ؤ)</td><td>يُؤمن، شُؤون، مُؤمن</td></tr>
 <tr><td>مفتوحة وما قبلها مفتوح أو ساكن</td><td>ألف (أ)</td><td>سأل، يأكل، مأمون</td></tr>
 <tr><td>ساكنة وما قبلها مفتوح</td><td>السطر</td><td>جزء، بطء، شيء</td></tr>
 </tbody></table></div></div>
-
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (سُئل) — الهمزة المتوسطة تُكتب على:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) ألف</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) واو</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) ياء</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) السطر</div>
+</div>
+<div class="mini-exp">💡 سُئِل: الهمزة مكسورة + ما قبلها مضموم → الكسر أقوى → على ياء.</div>
+</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (تَفاؤُل) — الهمزة المتوسطة تُكتب على:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) ياء</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) واو</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) ألف</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) السطر</div>
+</div>
+<div class="mini-exp">💡 تَفاؤُل: الهمزة مضمومة + ما قبلها مفتوح → الضم أقوى من الفتح → على واو.</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#dbeafe">📝</div><h2>الهمزة المتطرفة</h2></div>
 <div class="rule-box">تُكتب حسب حركة الحرف قبلها.</div>
 <div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>ما قبل الهمزة</th><th>تُكتب على</th><th>مثال</th></tr></thead><tbody>
@@ -1009,7 +1594,6 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td>مكسور</td><td>ياء (ئ)</td><td>شاطئ، مبادئ</td></tr>
 <tr><td>مضموم</td><td>واو (ؤ)</td><td>لؤلؤ، التعاطؤ</td></tr>
 </tbody></table></div></div>
-
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#f3e8ff">🔚</div><h2>الألف المتطرفة — ممدودة أم مقصورة؟</h2></div>
 <div class="mind-map"><div class="mind-map-center">الألف المتطرفة — متى تُكتب ممدودة ومتى مقصورة؟</div>
 <div class="mind-map-grid">
@@ -1020,8 +1604,20 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <div class="mind-node"><h4>📌 الحروف</h4><ul><li>كلها ممدودة: لا، ما، إلا، لولا، هلا</li><li>استثناء مقصورة: إلى، على، بلى، حتى</li></ul></div>
 <div class="mind-node"><h4>📌 الأسماء الأعجمية</h4><ul><li>كلها ممدودة: فرنسا، أمريكا، يافا</li><li>استثناء: موسى، عيسى، كسرى، بخارى</li></ul></div>
 </div></div>
-<div class="note-box"><strong>الألف الفارقة:</strong> ألف تُكتب ولا تُنطق بعد واو الجماعة.<br>مثال: شاهدوا ← الواو للجماعة + ألف فارقة (للتفريق بين واو الجماعة والواو الأصلية)</div></div>
-
+<div class="note-box"><strong>الألف الفارقة:</strong> ألف تُكتب ولا تُنطق بعد واو الجماعة.<br/>مثال: شاهدوا ← الواو للجماعة + ألف فارقة (للتفريق بين واو الجماعة والواو الأصلية)</div></div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (اصطفى / سما / على / هدايا) — ممدودة أم مقصورة؟</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) كلها مقصورة</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) كلها ممدودة</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) اصطفى: مقصورة / سما: ممدودة / على: مقصورة / هدايا: ممدودة</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) اصطفى: ممدودة / سما: مقصورة / على: ممدودة / هدايا: مقصورة</div>
+</div>
+<div class="mini-exp">💡 اصطفى (فوق ثلاثي: مقصورة) / سما (ثلاثي أصلها واو: ممدودة) / على (حرف استثناء: مقصورة) / هدايا (قبلها ياء: ممدودة).</div>
+</div>
+</div>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fce7f3">🔤</div><h2>علامات الترقيم — جدول شامل</h2></div>
 <div class="note-box">علامات الترقيم تظهر في الأسئلة — احفظها جيداً!</div>
 <div class="table-wrap"><table><thead><tr><th>العلامة</th><th>شكلها</th><th>مواضع استعمالها</th><th>مثال</th></tr></thead><tbody>
@@ -1036,17 +1632,39 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td><strong>القوسان الهلاليان</strong></td><td style="text-align:center;font-size:18px">( )</td><td>الجمل المعترضة للدعاء / تفسير الكلمات / تواريخ الميلاد والوفاة</td><td>المتنبي (303-354هـ)</td></tr>
 <tr><td><strong>علامة التنصيص</strong></td><td style="text-align:center;font-size:18px">"..."</td><td>في أول النص المقتبس وآخره</td><td>قال: "من يهن يسهل الهوان عليه"</td></tr>
 </tbody></table></div>
-<div class="warn-box"><strong>نماذج من الأسئلة:</strong><br>
-• بعد المنادى: (يا أحمد<strong>،</strong> أقم دينك) ← فاصلة<br>
-• بين القول والمقول: (قال الشاعر<strong>:</strong> أنا الذي...) ← نقطتان رأسيتان<br>
-• الجملة المعترضة: (قال ابن عباس <strong>—رضي الله عنه—</strong> ...) ← شرطتان<br>
-• نهاية الكلام: (العلم نور<strong>.</strong>) ← نقطة<br>
+<div class="warn-box"><strong>نماذج من الأسئلة:</strong><br/>
+• بعد المنادى: (يا أحمد<strong>،</strong> أقم دينك) ← فاصلة<br/>
+• بين القول والمقول: (قال الشاعر<strong>:</strong> أنا الذي...) ← نقطتان رأسيتان<br/>
+• الجملة المعترضة: (قال ابن عباس <strong>—رضي الله عنه—</strong> ...) ← شرطتان<br/>
+• نهاية الكلام: (العلم نور<strong>.</strong>) ← نقطة<br/>
 • التعجب والإنكار معاً: (أغير الله تدعون <strong>؟!</strong>) ← استفهام + تعجب
 </div>
 </div>
+<div style="background:linear-gradient(135deg,#f0f7ff,#e8f5f0);border-radius:12px;padding:18px 20px;margin:15px 0 25px;border:2px solid #2563eb">
+<div style="font-weight:700;color:#1a3a5c;font-size:15px;margin-bottom:14px">✅ أسئلة تقييم — اختر الإجابة الصحيحة</div>
+<div class="mini-q" data-correct="1" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">1. (قال المعلمُ ..... ادرسوا جيداً) — العلامة المناسبة:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) فاصلة (،)</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) نقطتان رأسيتان (:)</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) فاصلة منقوطة (؛)</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) علامة تعجب (!)</div>
 </div>
+<div class="mini-exp">💡 النقطتان الرأسيتان (:) تُوضع بين القول والكلام المقول.</div>
+</div>
+<div class="mini-q" data-correct="2" style="margin-bottom:16px">
+<div style="font-weight:600;color:#1a3a5c;margin-bottom:8px;font-size:14px">2. (اجتهد ..... فالكسول لا يُفلح) — العلامة:</div>
+<div class="mini-opts">
+<div class="mini-opt" onclick="pickMini(this,0)">أ) فاصلة (،)</div>
+<div class="mini-opt" onclick="pickMini(this,1)">ب) نقطة (.)</div>
+<div class="mini-opt" onclick="pickMini(this,2)">ج) فاصلة منقوطة (؛) لأن الثانية سبب للأولى</div>
+<div class="mini-opt" onclick="pickMini(this,3)">د) نقطتان (:)</div>
+</div>
+<div class="mini-exp">💡 الفاصلة المنقوطة (؛) تُوضع بين جملتين إحداهما سبب للأخرى.</div>
+</div>
+</div></div>
 
-<div id="fahm" class="section">
+<div class="section" id="fahm">
 <h2 class="section-title">📖 مهارة فهم النص</h2>
 <div class="card"><div class="card-header"><div class="card-icon" style="background:#fef3c7">💡</div><h2>كيف تجيب على أسئلة فهم النص</h2></div>
 <div class="rule-box">أسئلة فهم النص تختبر قدرتك على استخراج المعنى الحقيقي والمراد من العبارة — مش الكلمات الحرفية.</div>
@@ -1057,15 +1675,14 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <tr><td>الجو النفسي للشعر</td><td>المشاعر التي تعبر عنها الصورة</td><td>انظر للألفاظ: الظلام/الوحشة=حزن وغضب / النور/الأمل=فرح</td></tr>
 <tr><td>الفرضية/المشكلة</td><td>الفكرة التي يقوم عليها النص</td><td>ابحث عن العبارة التي تلخص محور النص</td></tr>
 </tbody></table></div>
-<div class="note-box"><strong>نماذج من الأسئلة الحقيقية:</strong><br>
-• "لم تكن التقنية هي التي غيّرت سلوكنا، بل كانت أدوات لتلبية رغبات كامنة" → التقنية كشفت رغبات موجودة مسبقاً<br>
-• "الرياح تعوي.. والسكون مخيف" → الجو النفسي: <strong>الغضب والثورة</strong><br>
+<div class="note-box"><strong>نماذج من الأسئلة الحقيقية:</strong><br/>
+• "لم تكن التقنية هي التي غيّرت سلوكنا، بل كانت أدوات لتلبية رغبات كامنة" → التقنية كشفت رغبات موجودة مسبقاً<br/>
+• "الرياح تعوي.. والسكون مخيف" → الجو النفسي: <strong>الغضب والثورة</strong><br/>
 • "تستهلك المنتج الثقافي كما يُقدم لها، دون آلية نقد أو انتقاء" → غياب التفاعل النقدي مع الثقافة الوافدة
 </div>
 </div>
 </div>
-
-<div id="flashcards" class="section">
+<div class="section" id="flashcards">
 <h2 class="section-title">🃏 بطاقات المراجعة السريعة</h2>
 <p style="color:var(--muted);margin-bottom:20px">اضغط على البطاقة لكشف الإجابة 👆</p>
 <div class="tab-nav">
@@ -1074,21 +1691,20 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <button class="tab-btn" onclick="switchTab(this,'fc-balagha')">البلاغة</button>
 <button class="tab-btn" onclick="switchTab(this,'fc-imla')">الإملاء</button>
 </div>
-<div id="fc-nahw" class="tab-content active"><div class="flashcard-grid" id="fc-nahw-grid"></div></div>
-<div id="fc-sarf" class="tab-content"><div class="flashcard-grid" id="fc-sarf-grid"></div></div>
-<div id="fc-balagha" class="tab-content"><div class="flashcard-grid" id="fc-balagha-grid"></div></div>
-<div id="fc-imla" class="tab-content"><div class="flashcard-grid" id="fc-imla-grid"></div></div>
+<div class="tab-content active" id="fc-nahw"><div class="flashcard-grid" id="fc-nahw-grid"></div></div>
+<div class="tab-content" id="fc-sarf"><div class="flashcard-grid" id="fc-sarf-grid"></div></div>
+<div class="tab-content" id="fc-balagha"><div class="flashcard-grid" id="fc-balagha-grid"></div></div>
+<div class="tab-content" id="fc-imla"><div class="flashcard-grid" id="fc-imla-grid"></div></div>
 </div>
-
-<div id="quiz" class="section">
+<div class="section" id="quiz">
 <h2 class="section-title">📝 الاختبار النهائي التجريبي</h2>
 <div class="card" style="margin-bottom:20px">
 <div style="display:flex;gap:15px;flex-wrap:wrap;align-items:center;justify-content:space-between">
-<div><strong style="font-size:18px">129 سؤالاً</strong> — اختيار من متعدد<br><span style="color:var(--muted);font-size:14px">يغطي النحو والصرف والبلاغة والإملاء وفهم النص</span></div>
-<div style="display:flex;gap:10px"><span id="quiz-score-display" class="score-pill">⭐ 0 / 0</span><button class="quiz-btn" onclick="restartQuiz()" style="background:var(--g3)">🔄 إعادة الاختبار</button></div>
+<div><strong style="font-size:18px">129 سؤالاً</strong> — اختيار من متعدد<br/><span style="color:var(--muted);font-size:14px">يغطي النحو والصرف والبلاغة والإملاء وفهم النص</span></div>
+<div style="display:flex;gap:10px"><span class="score-pill" id="quiz-score-display">⭐ 0 / 0</span><button class="quiz-btn" onclick="restartQuiz()" style="background:var(--g3)">🔄 إعادة الاختبار</button></div>
 </div>
 <div class="quiz-progress-bar" style="margin-top:15px"><div class="quiz-progress-fill" id="quiz-progress" style="width:0%"></div></div>
-<div style="font-size:13px;color:var(--muted);margin-top:5px" id="quiz-progress-text">السؤال 1 من 60</div>
+<div id="quiz-progress-text" style="font-size:13px;color:var(--muted);margin-top:5px">السؤال 1 من 129</div>
 </div>
 <div class="quiz-container" id="quiz-container"></div>
 <div class="quiz-result" id="quiz-result">
@@ -1098,21 +1714,21 @@ tbody td{padding:10px 15px;border-bottom:1px solid var(--border);font-size:14px}
 <button class="quiz-btn" onclick="restartQuiz()">🔄 إعادة الاختبار من البداية</button>
 </div>
 </div>
-
 </div>
 <footer class="footer">
 <p>📚 ملخص اللغة العربية — متطلب جامعة السلطان قابوس | الطبعة الأولى 2024</p>
 <p style="margin-top:5px;font-size:12px">بالتوفيق في اختبارك النهائي 🌟</p>
 </footer>
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
 <script>
 function showSection(id,btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  window.scrollTo(0, 0);
 }
 function toggleAcc(header){header.parentElement.classList.toggle('open');}
 function switchTab(btn,tabId){
@@ -1249,15 +1865,15 @@ const quizQuestions=[
 {cat:"إملاء",q:"كلمة (سُئل) — الهمزة المتوسطة:",opts:["ألف","واو","ياء","السطر"],ans:2,exp:"سُئِل: الهمزة مكسورة وما قبلها مضموم — الأقوى هو الكسر → على ياء."},
 {cat:"إملاء",q:"ألف (إلى) المتطرفة:",opts:["ممدودة لأنه حرف","مقصورة لأنه استثناء","مقصورة لأن أصلها ياء","ممدودة دائماً في الحروف"],ans:1,exp:"الحروف كلها ممدودة إلا: إلى، على، بلى، حتى → مقصورة."},
 {cat:"إملاء",q:"(شاهدوا الفيديو) — الألف بعد الواو:",opts:["خطأ لا تُكتب","الألف الفارقة تُكتب ولا تُنطق","الألف المقصورة","الألف الممدودة الأصلية"],ans:1,exp:"الألف الفارقة: تُكتب بعد واو الجماعة للتمييز بينها وبين الواو الأصلية."},
-{cat:"فهم",q:"(إن الثمانين وبلغتها قد أحوجت سمعي إلى ترجمان) — الغرض البلاغي:",opts:["افتخار بالمكانة","طول الأمل","إظهار الضعف والأسى","طلب العون"],ans:2,exp:"خبر يُفيد إظهار الضعف والشكوى من الكِبَر."},
+{cat:"بلاغة",q:"(إن الثمانين وبلغتها قد أحوجت سمعي إلى ترجمان) — الغرض البلاغي:",opts:["افتخار بالمكانة","طول الأمل","إظهار الضعف والأسى","طلب العون"],ans:2,exp:"خبر يُفيد إظهار الضعف والشكوى من الكِبَر."},
 {cat:"فهم",q:"لم تكن التقنية هي التي غيّرت سلوكنا، بل كانت أدوات لتلبية رغبات كانت كامنة فينا — يُفهم منها:",opts:["التقنية سلبية","التقنية تخلق رغبات جديدة","التقنية كشفت رغبات موجودة أصلاً","التقنية لا تؤثر"],ans:2,exp:"النص يقول إن التقنية كشفت الرغبات الكامنة ولم تخلقها من عدم."},
 {cat:"فهم",q:"(بعض وسائل الإعلام لا تصنع الخبر بل تصنع من الخبر حدثاً) — يُفهم منها:",opts:["الدقة في نقل الأخبار","إعطاء بعض الأخبار هالة درامية أكبر","عدم اهتمام الإعلام","نشر الأخبار دون تحرير"],ans:1,exp:"بعض وسائل الإعلام تضخّم الأخبار."},
 {cat:"فهم",q:"الشاعر في درس فلسفة الحياة يدعو إلى:",opts:["التشاؤم من الحياة","التفكير الدائم في الآلام","الأخذ من الحياة بالتفاؤل","الانعزال عن الحياة"],ans:2,exp:"الشاعر الرومانسي يدعو للتفاؤل والاستمتاع بالحياة."},
 {cat:"فهم",q:"كلمة (السفاهة) في: (واعلموا أن مع السفاهة الندامة) تعني:",opts:["التفاهة والسذاجة","الاندفاع والتهور","الحمق والطيش","التعجّل والإسراع"],ans:2,exp:"السفاهة: الحمق وعدم الرزانة والطيش."},
 {cat:"مراجعة",q:"توكيد في الجملة (آدم أبو البشر كلِّه):",opts:["آدم","أبو","البشر","كله"],ans:3,exp:"كلِّه: توكيد معنوي مجرور بالإضافة."},
 {cat:"مراجعة",q:"في الجملة (رأيت وجه والدي حزيناً) — إعراب (حزيناً):",opts:["نعت","تمييز","حال من وجه","مفعول به ثانٍ"],ans:2,exp:"حزيناً: حال منصوبة، وصاحب الحال (وجه)."},
-{cat:"مراجعة",q:"(إنما الأعمال بالنيات) — المقصور عليه:",opts:["الأعمال","النيات","إنما","لا شيء"],ans:1,exp:"في إنما: المقصور عليه هو ما يأتي في نهاية الجملة = النيات."},
-{cat:"مراجعة",q:"(قامت اللغة العربية بترجمة علوم هذه الأمم) — الأسلوب:",opts:["خبري مباشر","إسناد مجازي","استعارة تصريحية","كناية"],ans:1,exp:"اللغة أُسند إليها القيام بالترجمة وهي لا تقوم فعلياً = إسناد مجازي."},
+{cat:"بلاغة",q:"(إنما الأعمال بالنيات) — المقصور عليه:",opts:["الأعمال","النيات","إنما","لا شيء"],ans:1,exp:"في إنما: المقصور عليه هو ما يأتي في نهاية الجملة = النيات."},
+{cat:"فهم",q:"(قامت اللغة العربية بترجمة علوم هذه الأمم) — الأسلوب:",opts:["خبري مباشر","إسناد مجازي","استعارة تصريحية","كناية"],ans:1,exp:"اللغة أُسند إليها القيام بالترجمة وهي لا تقوم فعلياً = إسناد مجازي."},
 {cat:"نحو",q:"(كاد المعلمُ أن يكون رسولاً) — نوع (كاد) هنا:",opts:["فعل تام","فعل ناقص ناسخ من أفعال المقاربة","فعل ناقص من أفعال الرجاء","حرف ناسخ"],ans:1,exp:"كاد من أفعال المقاربة الناسخة، خبرها جملة فعلية (أن يكون رسولاً)."},
 {cat:"نحو",q:"(عسى الغائبُ أن يعود) — إعراب (الغائب):",opts:["مبتدأ مرفوع","اسم عسى مرفوع","فاعل مرفوع","خبر عسى مرفوع"],ans:1,exp:"عسى ناقصة هنا لأنها جاءت بعدها اسم + أن وفعل مضارع. فالغائب: اسم عسى مرفوع."},
 {cat:"نحو",q:"(طفق الطالبُ يذاكرُ) — (طفق) من أفعال:",opts:["المقاربة","الرجاء","الشروع","الناسخة الحرفية"],ans:2,exp:"طفق من أفعال الشروع التي تدل على البدء في الفعل."},
@@ -1272,8 +1888,8 @@ const quizQuestions=[
 {cat:"نحو",q:"(اكتُبْ) — فعل الأمر الثلاثي — علامة بنائه:",opts:["الفتحة","الضمة","السكون","حذف النون"],ans:2,exp:"فعل الأمر الثلاثي الصحيح الآخر يُبنى على السكون."},
 {cat:"نحو",q:"(اكتُبَنَّ) — فعل الأمر — علامة بنائه:",opts:["السكون","الفتح لاتصاله بنون التوكيد","الكسرة","الضمة"],ans:1,exp:"فعل الأمر إذا اتصلت به نون التوكيد يُبنى على الفتح."},
 {cat:"نحو",q:"(ادعُ ربَّك) — فعل الأمر (ادعُ) — علامة بنائه:",opts:["السكون","الضمة","حذف حرف العلة (الواو)","حذف النون"],ans:2,exp:"فعل الأمر المعتل الآخر بالواو يُبنى على حذف حرف العلة: ادعُ (أصله: ادعوْ)."},
-{cat:"بلاغة",q:"(نعم الصديقُ الوفيُّ) — هذا أسلوب:",opts:["تشبيه","كناية","مدح","استعارة"],ans:2,exp:"نعم: فعل جامد يفيد المدح."},
-{cat:"بلاغة",q:"(بئس الخُلقُ الكذبُ) — هذا أسلوب:",opts:["تشبيه","ذم بـ(بئس)","كناية","قصر"],ans:1,exp:"بئس: فعل جامد يفيد الذم."},
+{cat:"نحو",q:"(نعم الصديقُ الوفيُّ) — هذا أسلوب:",opts:["تشبيه","كناية","مدح","استعارة"],ans:2,exp:"نعم: فعل جامد يفيد المدح."},
+{cat:"نحو",q:"(بئس الخُلقُ الكذبُ) — هذا أسلوب:",opts:["تشبيه","ذم بـ(بئس)","كناية","قصر"],ans:1,exp:"بئس: فعل جامد يفيد الذم."},
 {cat:"بلاغة",q:"(واللهِ لأجتهدَنَّ) — (واو) في هذه الجملة:",opts:["واو العطف","واو الحال","واو القسم","واو الجماعة"],ans:2,exp:"الواو هنا واو القسم، وجواب القسم: لأجتهدَنَّ (اللام + نون التوكيد)."},
 {cat:"بلاغة",q:"(لعمرُك إنهم لفي سكرتهم) — (لعمرك) هنا:",opts:["تمني","قسم بالعمر","نداء","تعجب"],ans:1,exp:"لعمرك: أسلوب قسم بالعمر، ومعناه: وحياتك."},
 {cat:"بلاغة",q:"(ما أجملَ السماءَ!) — هذا التعجب:",opts:["سماعي","قياسي بصيغة ما أفعله","قياسي بصيغة أفعِل به","إنشاء طلبي"],ans:1,exp:"ما أفعله: إحدى صيغتي التعجب القياسي."},
@@ -1282,7 +1898,7 @@ const quizQuestions=[
 {cat:"إملاء",q:"كلمة (بيت) تُكتب بـ:",opts:["تاء مربوطة","تاء مفتوحة","هاء","يمكن الاثنان"],ans:1,exp:"بيت: تاء مفتوحة — تبقى تاءً عند الوقف (بيتْ)."},
 {cat:"إملاء",q:"(اشرَبْ) — همزة الأمر من الفعل الثلاثي (شرب):",opts:["همزة قطع مفتوحة","همزة قطع مكسورة","همزة وصل","لا همزة"],ans:2,exp:"أمر الفعل الثلاثي دائماً همزة وصل: اشرَبْ / اكتُبْ / اذهَبْ."},
 {cat:"إملاء",q:"(أكرِمْ ضيفَك) — همزة الأمر من الفعل الرباعي (أكرم):",opts:["همزة وصل","همزة قطع مكسورة","همزة قطع مفتوحة","لا فرق"],ans:1,exp:"أمر الرباعي همزة قطع مكسورة: أكرِمْ، أعطِ، أحسِن."},
-{cat:"مراجعة",q:"أسلوب القصر في (ما محمد إلا رسول) هو:",opts:["قصر صفة على موصوف","قصر موصوف على صفة","إنما","التقديم"],ans:1,exp:"قصر موصوف (محمد) على صفة (الرسالة)."},
+{cat:"بلاغة",q:"أسلوب القصر في (ما محمد إلا رسول) هو:",opts:["قصر صفة على موصوف","قصر موصوف على صفة","إنما","التقديم"],ans:1,exp:"قصر موصوف (محمد) على صفة (الرسالة)."},
 {cat:"ترقيم",q:"بعد المنادى (يا أحمد ..... اجتهد) — العلامة المناسبة:",opts:["نقطة","فاصلة منقوطة","فاصلة","نقطتان رأسيتان"],ans:2,exp:"بعد المنادى تُوضع فاصلة: (يا أحمد، اجتهد)."},
 {cat:"ترقيم",q:"بين القول والكلام المقول (قال الشاعر ..... من يهن يسهل الهوان) — العلامة المناسبة:",opts:["فاصلة","نقطتان رأسيتان","فاصلة منقوطة","نقطة"],ans:1,exp:"بين لفظ القول والكلام المقول تُوضع نقطتان رأسيتان (:)."},
 {cat:"ترقيم",q:"(قال ابن عباس ..... رضي الله عنه ..... في التفسير) — العلامة المناسبة بين الجملة المعترضة:",opts:["فاصلة وفاصلة","قوسان هلاليان","شرطتان","نقطتان"],ans:2,exp:"الجمل المعترضة (الدعاء والتوضيح) توضع بين شرطتين: —رضي الله عنه—"},
@@ -1292,7 +1908,7 @@ const quizQuestions=[
 {cat:"ترقيم",q:"علامة الترقيم المناسبة في: (المتنبي ..... 303-354هـ ..... شاعر عباسي):",opts:["شرطتان","قوسان هلاليان","نقطتان رأسيتان","علامة تنصيص"],ans:1,exp:"تواريخ الميلاد والوفاة توضع بين قوسين هلاليين: (المتنبي (303-354هـ))."},
 {cat:"نحو",q:"(تسأله السؤالَ بأدبٍ جمٍّ) — كلمة (السؤال) إعرابها:",opts:["مفعول به أول","مفعول به ثانٍ","مفعول به ثالث","فاعل"],ans:0,exp:"تسأل تتعدى لمفعولين: الضمير (هـ) مفعول أول + السؤال مفعول ثانٍ."},
 {cat:"نحو",q:"(ذهبتُ إلى المكتبة فرأيتُ طالباً واقفاً) — كلمة (واقفاً):",opts:["نعت منصوب لـ طالب","حال منصوبة","مفعول به ثانٍ","تمييز"],ans:0,exp:"واقفاً: نعت منصوب يصف المنعوت (طالباً)."},
-{cat:"صرف",q:"(ولقد ينجيك ويرديك) — الكتابة الصحيحة للفراغين:",opts:["إغفال إحتراس","اغفال إحتراس","إغفال احتراس","اغفال احتراس"],ans:2,exp:"إغفال: مصدر رباعي (أغفل) همزته قطع. احتراس: مصدر خماسي (احترس) همزته وصل."},
+{cat:"إملاء",q:"(ولقد ينجيك ويرديك) — الكتابة الصحيحة للفراغين:",opts:["إغفال إحتراس","اغفال إحتراس","إغفال احتراس","اغفال احتراس"],ans:2,exp:"إغفال: مصدر رباعي (أغفل) همزته قطع. احتراس: مصدر خماسي (احترس) همزته وصل."},
 {cat:"صرف",q:"مصدر الفعل (استخرج):",opts:["خروج","إخراج","استخراج","خِراج"],ans:2,exp:"مصدر السداسي على وزن استفعال: استخرج ← استخراج."},
 {cat:"صرف",q:"مصدر الفعل (انطلق):",opts:["طلاق","إطلاق","طلوق","انطلاق"],ans:3,exp:"مصدر الخماسي على وزن انفعال: انطلق ← انطلاق."},
 
@@ -1317,7 +1933,7 @@ const quizQuestions=[
 {cat:"صرف",q:"الفعل (قال) — نوعه من حيث الصحة والاعتلال:",opts:["صحيح سالم","مثال واوي","أجوف واوي","ناقص"],ans:2,exp:"قال: أجوف واوي — العين (واو) حرف علة: ق-و-ل."},
 {cat:"صرف",q:"الفعل (رمى) — نوعه من حيث الصحة والاعتلال:",opts:["صحيح","مثال","أجوف","ناقص يائي"],ans:3,exp:"رمى: ناقص يائي — اللام (ياء) حرف علة: ر-م-ي."},
 {cat:"صرف",q:"الفعل (دعا) — نوعه من حيث الصحة والاعتلال:",opts:["صحيح","مثال","أجوف","ناقص واوي"],ans:3,exp:"دعا: ناقص واوي — اللام (واو) حرف علة: د-ع-و."},
-{cat:"صرف",q:"جمع المذكر السالم (المعلمون) في جملة مضاف إليه يصبح:",opts:["المعلمونَ","المعلمينَ","معلمو","معلمي"],ans:2,exp:"عند الإضافة تُحذف النون: معلمو المدرسة (رفع) / معلمي المدرسة (نصب وجر)."},
+{cat:"نحو",q:"جمع المذكر السالم (المعلمون) في جملة مضاف إليه يصبح:",opts:["المعلمونَ","المعلمينَ","معلمو","معلمي"],ans:2,exp:"عند الإضافة تُحذف النون: معلمو المدرسة (رفع) / معلمي المدرسة (نصب وجر)."},
 {cat:"بلاغة",q:"(لا تجلس في مجرى الريح) — الغرض من النهي:",opts:["الدعاء","النصح والإرشاد","التيئيس","التمني"],ans:1,exp:"النهي هنا للنصح والإرشاد."},
 {cat:"بلاغة",q:"(ربنا لا تؤاخذنا) — الغرض من النهي:",opts:["النصح","التحذير","الدعاء (من الأدنى للأعلى)","التيئيس"],ans:2,exp:"النهي هنا دعاء من العبد لربه."},
 {cat:"بلاغة",q:"أسلوب (إما أن تدرس وإما أن تلعب) — هذا:",opts:["استفهام","تقسيم وتخيير","قصر","نهي"],ans:1,exp:"إما: أداة تقسيم وتخيير بين أمرين."},
@@ -1326,18 +1942,55 @@ const quizQuestions=[
 {cat:"إملاء",q:"كلمة (قائل) — الهمزة المتوسطة تُكتب على:",opts:["ألف","واو","ياء","السطر"],ans:2,exp:"قائل: الهمزة مكسورة (أصل الكلمة: قاوِل) — الكسر أقوى → على ياء."},
 {cat:"نحو",q:"(جاء معلمو المدرسة) — علامة رفع (معلمو):",opts:["الضمة","الواو مع حذف النون للإضافة","الواو مع النون","الألف"],ans:1,exp:"جمع المذكر السالم المضاف يُرفع بالواو وتُحذف نونه للإضافة."},
 {cat:"نحو",q:"الجملة: (إنه يحمل كتاباً) من القصة — نوع خبر إن:",opts:["مفرد","جملة فعلية","شبه جملة","جملة اسمية"],ans:1,exp:"خبر إن جملة فعلية (يحمل كتاباً)."},
-{cat:"مراجعة",q:"(آدم أبو البشر كلِّه) — إعراب (كلِّه):",opts:["بدل","نعت","توكيد معنوي مجرور","حال"],ans:2,exp:"كلِّه: توكيد معنوي، مجرور بالكسرة وهو مضاف، والهاء في محل جر مضاف إليه."},
-{cat:"مراجعة",q:"(زرت المتحفَين كليهما) — إعراب (كليهما):",opts:["توكيد منصوب بالياء","بدل","نعت","حال"],ans:0,exp:"كليهما: توكيد لفظي منصوب بالياء لأنه ملحق بالمثنى."},
+{cat:"نحو",q:"(آدم أبو البشر كلِّه) — إعراب (كلِّه):",opts:["بدل","نعت","توكيد معنوي مجرور","حال"],ans:2,exp:"كلِّه: توكيد معنوي، مجرور بالكسرة وهو مضاف، والهاء في محل جر مضاف إليه."},
+{cat:"نحو",q:"(زرت المتحفَين كليهما) — إعراب (كليهما):",opts:["توكيد منصوب بالياء","بدل","نعت","حال"],ans:0,exp:"كليهما: توكيد لفظي منصوب بالياء لأنه ملحق بالمثنى."},
 
 ];
 
-let currentQ=0,score=0,answered=false;
+const categoryOrder=['نحو','صرف','إملاء','بلاغة','فهم','ترقيم','مراجعة'];
+let currentQ=0,score=0,answered=false,activeCategory='all',currentQuestions=[];
+function sortedQuestions(list){
+  return [...list].sort((a,b)=>{
+    const ca=categoryOrder.indexOf(a.cat), cb=categoryOrder.indexOf(b.cat);
+    const aa=ca===-1?99:ca, bb=cb===-1?99:cb;
+    return aa-bb;
+  });
+}
+function buildQuizControls(){
+  const counts=quizQuestions.reduce((acc,q)=>{acc[q.cat]=(acc[q.cat]||0)+1;return acc;},{});
+  const total=quizQuestions.length;
+  const cats=['all',...categoryOrder.filter(c=>counts[c]),...Object.keys(counts).filter(c=>!categoryOrder.includes(c)).sort()];
+  const row=document.getElementById('quiz-filter-row');
+  if(row){
+    row.innerHTML=cats.map(c=>{
+      const label=c==='all'?'كل الأسئلة':c;
+      const n=c==='all'?total:counts[c];
+      return `<button class="quiz-filter-btn ${c===activeCategory?'active':''}" onclick="applyQuizFilter('${c}')">${label} (${n})</button>`;
+    }).join('');
+  }
+  const audit=document.getElementById('quiz-audit');
+  if(audit){
+    audit.innerHTML=categoryOrder.filter(c=>counts[c]).map(c=>`
+      <div class="audit-card"><div class="audit-num">${counts[c]}</div><div class="audit-label">${c}</div></div>
+    `).join('')+`<div class="audit-card"><div class="audit-num">${total}</div><div class="audit-label">المجموع</div></div>`;
+  }
+}
+function applyQuizFilter(cat){
+  activeCategory=cat;
+  restartQuiz(false);
+}
 function buildQuiz(){
+  buildQuizControls();
   const container=document.getElementById('quiz-container');
   container.style.display='block';
-  container.innerHTML=quizQuestions.map((q,i)=>`
+  currentQuestions = activeCategory==='all' ? sortedQuestions(quizQuestions) : sortedQuestions(quizQuestions.filter(q=>q.cat===activeCategory));
+  if(!currentQuestions.length){
+    container.innerHTML='<div class="card">لا توجد أسئلة في هذا القسم حالياً.</div>';
+    return;
+  }
+  container.innerHTML=currentQuestions.map((q,i)=>`
     <div class="quiz-question ${i===0?'current':''}" id="q${i}">
-      <div class="question-num">${q.cat} — السؤال ${i+1} من ${quizQuestions.length}</div>
+      <div class="question-meta"><span class="question-chip">${q.cat}</span><span class="question-chip">سؤال ${i+1} من ${currentQuestions.length}</span></div>
       <div class="question-text">${q.q}</div>
       <div class="options">
         ${q.opts.map((opt,j)=>`
@@ -1348,15 +2001,16 @@ function buildQuiz(){
       </div>
       <div class="explanation" id="exp${i}">💡 ${q.exp}</div>
       <button class="quiz-btn" onclick="nextQuestion()" id="nextBtn${i}" style="display:none">
-        ${i===quizQuestions.length-1?'🏁 إنهاء الاختبار':'التالي ←'}
+        ${i===currentQuestions.length-1?'🏁 إنهاء الاختبار':'التالي ←'}
       </button>
     </div>`).join('');
+  document.getElementById('quiz-score-display').textContent=`⭐ ${score} / ${currentQuestions.length}`;
   updateProgress();
 }
 function selectAnswer(qi,choice){
   if(answered)return;
   answered=true;
-  const q=quizQuestions[qi];
+  const q=currentQuestions[qi];
   document.querySelectorAll(`#q${qi} .option`).forEach((opt,i)=>{
     if(i===q.ans)opt.classList.add('correct');
     else if(i===choice&&i!==q.ans)opt.classList.add('wrong');
@@ -1364,12 +2018,12 @@ function selectAnswer(qi,choice){
   document.getElementById(`exp${qi}`).style.display='block';
   document.getElementById(`nextBtn${qi}`).style.display='inline-block';
   if(choice===q.ans)score++;
-  document.getElementById('quiz-score-display').textContent=`⭐ ${score} / ${quizQuestions.length}`;
+  document.getElementById('quiz-score-display').textContent=`⭐ ${score} / ${currentQuestions.length}`;
 }
 function nextQuestion(){
   document.getElementById(`q${currentQ}`).classList.remove('current');
   currentQ++;
-  if(currentQ>=quizQuestions.length){showResult();}
+  if(currentQ>=currentQuestions.length){showResult();}
   else{
     document.getElementById(`q${currentQ}`).classList.add('current');
     answered=false;
@@ -1378,32 +2032,47 @@ function nextQuestion(){
   }
 }
 function updateProgress(){
-  document.getElementById('quiz-progress').style.width=((currentQ/quizQuestions.length)*100)+'%';
-  document.getElementById('quiz-progress-text').textContent=`السؤال ${currentQ+1} من ${quizQuestions.length}`;
+  const total=currentQuestions.length||1;
+  document.getElementById('quiz-progress').style.width=((currentQ/total)*100)+'%';
+  document.getElementById('quiz-progress-text').textContent=`السؤال ${Math.min(currentQ+1,total)} من ${currentQuestions.length}`;
 }
 function showResult(){
   document.getElementById('quiz-container').style.display='none';
   document.getElementById('quiz-result').style.display='block';
-  const pct=Math.round((score/quizQuestions.length)*100);
-  document.getElementById('final-score').textContent=`${score}/${quizQuestions.length}`;
+  const pct=Math.round((score/currentQuestions.length)*100);
+  document.getElementById('final-score').textContent=`${score}/${currentQuestions.length}`;
   let msg,detail;
-  if(pct>=90){msg='🏆 ممتاز! أداء رائع جداً';detail='أنت مستعد تماماً للاختبار النهائي.';}
+  if(pct>=90){msg='🏆 ممتاز! أداء رائع جداً';detail='أنت مستعد تماماً لهذا الباب.';}
   else if(pct>=75){msg='👏 جيد جداً! قريب من الإتقان';detail='راجع الأسئلة الخاطئة وستصل للامتياز.';}
-  else if(pct>=60){msg='📚 جيد — لكن يحتاج مزيداً من المراجعة';detail='ركّز على الأبواب التي أخطأت فيها.';}
-  else{msg='💪 تحتاج مراجعة أعمق';detail='لا تيأس، راجع الملخص مرة أخرى وأعد الاختبار.';}
+  else if(pct>=60){msg='📚 جيد — لكن يحتاج مزيداً من المراجعة';detail='ركّز على القواعد المرتبطة بالأسئلة التي أخطأت فيها.';}
+  else{msg='💪 تحتاج مراجعة أعمق';detail='راجع الملخص الخاص بهذا الباب ثم أعد الاختبار.';}
   document.getElementById('final-msg').textContent=msg;
   document.getElementById('final-detail').textContent=detail;
 }
-function restartQuiz(){
+function restartQuiz(scrollToQuiz=true){
   currentQ=0;score=0;answered=false;
   document.getElementById('quiz-result').style.display='none';
-  document.getElementById('quiz-score-display').textContent=`⭐ 0 / ${quizQuestions.length}`;
   buildQuiz();
-  document.getElementById('quiz').scrollIntoView({behavior:'smooth'});
+  if(scrollToQuiz) document.getElementById('quiz').scrollIntoView({behavior:'smooth'});
 }
 document.addEventListener('DOMContentLoaded',()=>{buildFlashcards();buildQuiz();});
+
+function pickMini(opt, choiceIdx) {
+  const q = opt.closest('.mini-q');
+  if (q.classList.contains('answered')) return;
+  q.classList.add('answered');
+  const correct = parseInt(q.dataset.correct);
+  const opts = q.querySelectorAll('.mini-opt');
+  opts.forEach((o, i) => {
+    if (i === correct) o.classList.add('correct');
+    else if (i === choiceIdx && i !== correct) o.classList.add('wrong');
+  });
+  const exp = q.querySelector('.mini-exp');
+  if (exp) exp.style.display = 'block';
+}
+
 </script>
 </body>
 </html>
 
-<!-- حياك حياك كبتن نورتنا وشرفتنا -->
+<--! حياك حياك كبتن نورتنا وشرفتنا -->
